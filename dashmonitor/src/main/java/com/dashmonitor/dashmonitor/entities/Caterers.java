@@ -1,5 +1,5 @@
 package com.dashmonitor.dashmonitor.entities;
 
-public class Booking {
+public class Caterers {
     
 }
