@@ -33,5 +33,49 @@ public class Users {
 
     // users table setters
 
-    public void set
+    public void setFirstName(String first_name){
+        this.first_name = first_name;
+    }
+
+    public void setLastName(String last_name){
+        this.last_name = last_name;
+
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+     public void setCreatedAt(Instant created_at){
+        this.created_at = created_at;
+    }
+
+    // getters
+
+    public Long getId(){
+        return userId;
+    }
+
+    public String getFirstName(){
+        return this.first_name;
+    }
+
+    public String getLastName(){
+        return this.last_name;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+
+    public String getPassword(){
+        return this.password;
+    }
+
+    public Instant getCreatedAt(){
+        return this.created_at;
+    }
 }
