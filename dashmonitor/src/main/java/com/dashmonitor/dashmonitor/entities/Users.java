@@ -14,31 +14,31 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long userId;
-    public String first_name;
-    public String last_name;
+    public String firstName;
+    public String lastName;
     public String email;
     public String password;
-    public Instant created_at;
+    public Instant createdAt;
 
     public Users(){
         this("", "", "","", Instant.now());
     }
-    public Users(String first_name, String last_name, String email, String password, Instant created_at ){
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public Users(String firstName, String lastName, String email, String password, Instant createdAt ){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
     // users table setters
 
-    public void setFirstName(String first_name){
-        this.first_name = first_name;
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
     }
 
-    public void setLastName(String last_name){
-        this.last_name = last_name;
+    public void setLastName(String lastName){
+        this.lastName = lastName;
 
     }
 
@@ -50,7 +50,7 @@ public class Users {
         this.password = password;
     }
      public void setCreatedAt(Instant created_at){
-        this.created_at = created_at;
+        this.createdAt = created_at;
     }
 
     // getters
@@ -60,11 +60,11 @@ public class Users {
     }
 
     public String getFirstName(){
-        return this.first_name;
+        return this.firstName;
     }
 
     public String getLastName(){
-        return this.last_name;
+        return this.lastName;
     }
 
     public String getEmail(){
@@ -76,6 +76,6 @@ public class Users {
     }
 
     public Instant getCreatedAt(){
-        return this.created_at;
+        return this.createdAt;
     }
 }
