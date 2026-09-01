@@ -1,9 +1,13 @@
 package com.dashmonitor.dashmonitor.entities;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name= "serviceCategories")
 public class ServiceCategories {
     
     @Id
@@ -29,5 +33,19 @@ public class ServiceCategories {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    // getters
+
+    public Long getCategoryId(){
+        return this.categoryId;
+    }
+
+    public String setCategoryName(){
+        return this.categoryName ;
+    }
+
+    public String setDescription(){
+        return this.description;
     }
 }
