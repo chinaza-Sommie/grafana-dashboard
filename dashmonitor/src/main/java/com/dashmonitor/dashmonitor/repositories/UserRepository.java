@@ -1,5 +1,10 @@
 package com.dashmonitor.dashmonitor.repositories;
 
-public class UserRepository {
+import org.springframework.data.repository.ListCrudRepository;
+
+import com.dashmonitor.dashmonitor.entities.Events;
+
+public interface UserRepository extends ListCrudRepository<Events, Long> {
+
     
 }
