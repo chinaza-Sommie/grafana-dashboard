@@ -98,7 +98,7 @@ public class Events {
     }
 
     public String getEventType(){
-        return this.eventType;
+        return this.eventType; 
     }
 
     public String getStartDateTime(){
