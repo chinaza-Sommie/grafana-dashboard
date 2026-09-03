@@ -2,9 +2,12 @@ package com.dashmonitor.dashmonitor.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.dashmonitor.dashmonitor.entities.Events;
 import com.dashmonitor.dashmonitor.repositories.EventsRepository;
 
+@Service
 public class EventsService {
     public EventsRepository eventsRepository;
 

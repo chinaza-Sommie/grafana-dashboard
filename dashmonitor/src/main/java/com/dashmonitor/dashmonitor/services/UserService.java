@@ -2,9 +2,12 @@ package com.dashmonitor.dashmonitor.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.repositories.UserRepository;
 
+@Service
 public class UserService {
     public UserRepository userRepository;
 
