@@ -30,7 +30,7 @@ public class UserService {
     public Users updateUser(Long id, Users user){
         Users updateUserDetails = userRepository.findById(id).get();
 
-
+        
         return updateUserDetails;
     }
 
