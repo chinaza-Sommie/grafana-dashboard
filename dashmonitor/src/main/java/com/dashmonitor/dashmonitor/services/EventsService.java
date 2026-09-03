@@ -15,7 +15,7 @@ public class EventsService {
         this.eventsRepository = eventsRepository;
     }
 
-    public List<Events> getAllEvents(EventsRepository eventsRepository){
+    public List<Events> getAllEvents(){
         return eventsRepository.findAll();
     }
 
