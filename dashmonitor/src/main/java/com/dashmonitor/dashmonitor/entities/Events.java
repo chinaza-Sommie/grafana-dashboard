@@ -93,7 +93,7 @@ public class Events {
         return this.eventId;
     }
 
-    public String getName(String name){
+    public String getName(){
         return this.name;
     }
 
