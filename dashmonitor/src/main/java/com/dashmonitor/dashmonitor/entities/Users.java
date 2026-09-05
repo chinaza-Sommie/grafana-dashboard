@@ -13,6 +13,7 @@ public class Users {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //make these feilds private later on
     public Long userId;
     public String firstName;
     public String lastName;
@@ -55,7 +56,7 @@ public class Users {
 
     // getters
 
-    public Long getId(){
+    public Long getUserId(){
         return userId;
     }
 

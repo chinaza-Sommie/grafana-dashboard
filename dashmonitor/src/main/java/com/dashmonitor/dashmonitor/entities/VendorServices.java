@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,14 +22,20 @@ public class VendorServices {
     public String basePrice;
     public Instant created_at;
     public Instant updated_at;
-    public String vendorsId; // change this to become a foreign key
-    public String serviceCategoryId; // smae with this one as well
+
+    @ManyToOne
+    @JoinColumn(name = "vendorsId")
+    public Vendors vendorsId; 
+
+    @ManyToOne
+    @JoinColumn(name = "serviceCategoryId")
+    public ServiceCategories serviceCategoryId; // smae with this one as well
 
     public VendorServices(){
-        this("", "", "", Instant.now(), Instant.now(), "", "" );
+        this("", "", "", Instant.now(), Instant.now(), null, null);
     }
 
-    public VendorServices(String name, String description, String basePrice, Instant created_at, Instant updated_at, String vendorsId, String serviceCategoryId){
+    public VendorServices(String name, String description, String basePrice, Instant created_at, Instant updated_at, Vendors vendorsId, ServiceCategories serviceCategoryId){
         this.name = name;
         this.description = description;
         this.basePrice = basePrice;
@@ -59,11 +67,11 @@ public class VendorServices {
         this.updated_at = updated_at;
     }
 
-    public void setVendorsId(String vendorsId){
+    public void setVendorsId(Vendors vendorsId){
         this.vendorsId = vendorsId;
     }
 
-    public void setServiceCategoryId(String serviceCategoryId){
+    public void setServiceCategoryId(ServiceCategories serviceCategoryId){
         this.serviceCategoryId = serviceCategoryId;
     }
 
@@ -93,11 +101,11 @@ public class VendorServices {
         return this.updated_at;
     }
 
-    public String getVendorsId(){
+    public Vendors getVendorsId(){
         return this.vendorsId;
     }
 
-    public String getServiceCategoryId(){
+    public ServiceCategories getServiceCategoryId(){
         return this.serviceCategoryId;
     }
 

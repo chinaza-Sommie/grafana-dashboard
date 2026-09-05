@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,22 +19,25 @@ public class Events {
     public Long eventId;
     public String name;
     public String eventType;
-    public String startDateTime;
-    public String endDateTime;
+    public Instant startDateTime;
+    public Instant endDateTime;
     public String totalAmount;
-    public String guestCount;
+    public Integer guestCount;
     public String status;
     public Instant created_at;
     public Instant updated_at;
-    public String userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public Users userId;
 
 
     public Events(){
-        this("", "", "","", "", "", "", Instant.now(), Instant.now(), "");
+        this("", "", Instant.now(),Instant.now(), "", 0, "", Instant.now(), Instant.now(), null); // why null here?
     }
 
-    public Events(String name, String eventType, String startDateTime, String endDateTime, String totalAmount, String guestCount,
-                    String status, Instant created_at, Instant updated_at, String userId){
+    public Events(String name, String eventType, Instant startDateTime, Instant endDateTime, String totalAmount, Integer guestCount,
+                    String status, Instant created_at, Instant updated_at, Users userId){
         this.name = name;
         this.eventType = eventType;
         this.startDateTime = startDateTime;
@@ -55,11 +60,11 @@ public class Events {
         this.eventType = eventType;
     }
 
-    public void setStartDateTime(String startDateTime){
+    public void setStartDateTime(Instant startDateTime){
         this.startDateTime = startDateTime;
     }
 
-    public void setEndDateTime(String endDateTime){
+    public void setEndDateTime(Instant endDateTime){
         this.endDateTime = endDateTime;
     }
 
@@ -67,7 +72,7 @@ public class Events {
         this.totalAmount = totalAmount;
     }
 
-    public void setGuestCount(String guestCount){
+    public void setGuestCount(Integer guestCount){
         this.guestCount = guestCount;
     }
 
@@ -83,7 +88,7 @@ public class Events {
         this.updated_at = updated_at;
     }
 
-    public void setUserId(String userId){
+    public void setUserId(Users userId){
         this.userId = userId;
     }
 
@@ -101,11 +106,11 @@ public class Events {
         return this.eventType; 
     }
 
-    public String getStartDateTime(){
+    public Instant getStartDateTime(){
         return this.startDateTime ;
     }
 
-    public String getEndDateTime(){
+    public Instant getEndDateTime(){
         return this.endDateTime;
     }
 
@@ -113,7 +118,7 @@ public class Events {
         return this.totalAmount;
     }
 
-    public String getGuestCount(){
+    public Integer getGuestCount(){
         return this.guestCount;
     }
 
@@ -125,11 +130,11 @@ public class Events {
         return this.created_at;
     }
 
-    public Instant setUpdated_at(){
+    public Instant getUpdated_at(){
         return this.updated_at;
     }
 
-    public String getUserId(){
+    public Users getUserId(){
         return this.userId;
     }
 

@@ -3,9 +3,12 @@ package com.dashmonitor.dashmonitor.services;
 import java.time.Instant;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.dashmonitor.dashmonitor.entities.Vendors;
 import com.dashmonitor.dashmonitor.repositories.VendorsRepository;
 
+@Service
 public class VendorsService {
     public VendorsRepository vendorsRepository;
 

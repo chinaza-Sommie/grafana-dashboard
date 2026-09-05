@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dashmonitor.dashmonitor.entities.VendorServices;
 import com.dashmonitor.dashmonitor.services.VendorServicesService;
 
+
+@RestController
 public class VendorServicesContoller {
     public VendorServicesService vendorServicesService;
 

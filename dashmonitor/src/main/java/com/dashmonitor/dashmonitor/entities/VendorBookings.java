@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,25 +19,30 @@ public class VendorBookings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long bookingId;
     public String agreedPrice;
-    public String startDateTime; // set this later to 1 hour before taking into account time for setup and setdown 
+    public Instant startDateTime; // set this later to 1 hour before taking into account time for setup and setdown 
     public String bookingstatus;
     
-    public String eventId;
-    public String vendorServices;
+    @ManyToOne
+    @JoinColumn(name = "eventId")
+    public Events eventId;
+
+    @ManyToOne
+    @JoinColumn(name = "serviceId")
+    public VendorServices serviceId;
 
     public Instant created_at; // this is needed because of changes to vendors status incase a vendor declines 
     public Instant updated_at;
 
     public VendorBookings(){
-        this("", "", "", "", "", Instant.now(), Instant.now());
+        this("", Instant.now(), "", null, null, Instant.now(), Instant.now());
     }
 
-    public VendorBookings(String agreedPrice, String startDateTime, String bookingstatus, String eventId, String vendorServices, Instant created_at, Instant updated_at){
+    public VendorBookings(String agreedPrice, Instant startDateTime, String bookingstatus, Events eventId, VendorServices serviceId, Instant created_at, Instant updated_at){
         this.agreedPrice = agreedPrice;
         this.startDateTime = startDateTime;
         this.bookingstatus = bookingstatus;
         this.eventId = eventId;
-        this.vendorServices = vendorServices;
+        this.serviceId = serviceId;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -45,7 +53,7 @@ public class VendorBookings {
         this.agreedPrice = agreedPrice;
     }
 
-    public void setStartDateTime(String startDateTime){
+    public void setStartDateTime(Instant startDateTime){
         this.startDateTime = startDateTime;
     }
 
@@ -53,12 +61,12 @@ public class VendorBookings {
         this.bookingstatus = bookingstatus;
     }
 
-    public void setEventId(String eventId){
+    public void setEventId(Events eventId){
         this.eventId = eventId;
     }
 
-    public void setVendorServices(String vendorServices){
-        this.vendorServices = vendorServices;
+    public void setVendorServices(VendorServices serviceId){
+        this.serviceId = serviceId;
     }
 
     public void setCreated_at(Instant created_at){
@@ -79,7 +87,7 @@ public class VendorBookings {
         return this.agreedPrice;
     }
 
-    public String getStartDateTime(){
+    public Instant getStartDateTime(){
         return this.startDateTime;
     }
 
@@ -87,12 +95,12 @@ public class VendorBookings {
         return this.bookingstatus;
     }
 
-    public String getEventId(){
+    public Events getEventId(){
         return this.eventId;
     }
 
-    public String getVendorServices(){
-        return this.vendorServices;
+    public VendorServices getVendorServices(){
+        return this.serviceId;
     }
 
     public Instant getCreated_at(){
