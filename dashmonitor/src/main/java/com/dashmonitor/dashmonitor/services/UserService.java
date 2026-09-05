@@ -24,6 +24,7 @@ public class UserService {
     }
 
     public Users createUser(Users user){
+        // hash the password
         return userRepository.save(user);
     }
 

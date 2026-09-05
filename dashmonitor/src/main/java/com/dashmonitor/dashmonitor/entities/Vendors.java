@@ -105,6 +105,10 @@ public class Vendors {
         return this.city;
     }
 
+    public String getStatus(){
+        return this.status;
+    }
+
     public Instant getCreatedAt(){
         return this.created_at;
     }

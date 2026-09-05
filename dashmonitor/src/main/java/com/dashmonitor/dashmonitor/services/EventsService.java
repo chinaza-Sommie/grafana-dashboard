@@ -15,7 +15,7 @@ public class EventsService {
         this.eventsRepository = eventsRepository;
     }
 
-    public List<Events> getAllEvents(EventsRepository eventsRepository){
+    public List<Events> getAllEvents(){
         return eventsRepository.findAll();
     }
 
@@ -28,9 +28,18 @@ public class EventsService {
     }
 
     public Events updateEvents(Long id, Events events){
-        Events updateEvents = eventsRepository.findById(id).get();
+        Events existingEvents = eventsRepository.findById(id).get();
 
-        return updateEvents;
+        existingEvents.setName(events.getName());
+        existingEvents.setEventType(events.getEventType());
+        existingEvents.setStartDateTime(events.getStartDateTime());
+        existingEvents.setEndDateTime(events.getEndDateTime());
+        existingEvents.setTotalAmount(events.getTotalAmount());
+        existingEvents.setGuestCount(events.getGuestCount());
+        existingEvents.setStatus(events.getStatus());
+        existingEvents.setUserId(events.getUserId());
+        
+        return eventsRepository.save(events);
     }
 
     public void deleteEvents(Long id){

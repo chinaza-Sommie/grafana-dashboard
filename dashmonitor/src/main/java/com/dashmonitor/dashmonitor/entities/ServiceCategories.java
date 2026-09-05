@@ -1,5 +1,7 @@
 package com.dashmonitor.dashmonitor.entities;
 
+import java.time.Instant;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,8 @@ public class ServiceCategories {
     public Long categoryId;
     public String categoryName;
     public String description;
+    // public Instant createdAt;
+    // public Instant updateAt;
 
     public ServiceCategories(){
         this("", "");
@@ -41,11 +45,11 @@ public class ServiceCategories {
         return this.categoryId;
     }
 
-    public String setCategoryName(){
+    public String getCategoryName(){
         return this.categoryName ;
     }
 
-    public String setDescription(){
+    public String getDescription(){
         return this.description;
     }
 }
