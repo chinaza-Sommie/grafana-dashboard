@@ -15,7 +15,7 @@ public class VendorServicesService {
         return vendorServicesRepository.findAll();
     }
 
-    public VendorServices getVendorServicesById(Long id){
+    public VendorServices getVendorServicesById(Long id){ 
         return vendorServicesRepository.findById(id).get();
     }
 
