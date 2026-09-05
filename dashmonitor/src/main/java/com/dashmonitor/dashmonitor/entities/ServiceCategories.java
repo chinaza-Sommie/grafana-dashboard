@@ -41,11 +41,11 @@ public class ServiceCategories {
         return this.categoryId;
     }
 
-    public String setCategoryName(){
+    public String getCategoryName(){
         return this.categoryName ;
     }
 
-    public String setDescription(){
+    public String getDescription(){
         return this.description;
     }
 }
