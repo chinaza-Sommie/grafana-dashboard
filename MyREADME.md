@@ -5,7 +5,7 @@ Event Planner is an app that allows a user to create an event which they would l
 # Tech Stack
 For this app, I used the following tech stack:
 - Springboot
--Java
+- Java
 - ReactJS
 - Typescript
 - SQL
