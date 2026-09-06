@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,13 +33,14 @@ public class Events {
     @JoinColumn(name = "user_id")
     public Users userId;
 
+    
 
     public Events(){
-        this("", "", Instant.now(),Instant.now(), "", 0, "", Instant.now(), Instant.now(), null); // why null here?
+        this("", "", Instant.now(),Instant.now(), "", 0, "", null); // why null here?
     }
 
     public Events(String name, String eventType, Instant startDateTime, Instant endDateTime, String totalAmount, Integer guestCount,
-                    String status, Instant created_at, Instant updated_at, Users userId){
+                    String status, Users userId){
         this.name = name;
         this.eventType = eventType;
         this.startDateTime = startDateTime;
@@ -45,10 +48,19 @@ public class Events {
         this.totalAmount = totalAmount;
         this.guestCount = guestCount;
         this.status = status;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
         this.userId = userId;
     
+    }
+
+    @PrePersist
+     public void onCreate(){
+        this.created_at = Instant.now();
+        this.updated_at = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updated_at = Instant.now();
     }
 
     // setters
@@ -78,14 +90,6 @@ public class Events {
 
     public void setStatus(String status){
        this.status = status;
-    }
-
-    public void setCreated_at(Instant created_at){
-        this.created_at = created_at;
-    }
-
-    public void setUpdated_at(Instant updated_at){
-        this.updated_at = updated_at;
     }
 
     public void setUserId(Users userId){

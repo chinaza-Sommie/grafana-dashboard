@@ -22,27 +22,27 @@ public class VendorsBookingsController {
 
 
     // get, put, post, delete
-    @GetMapping(value = "/vendor_booking", produces = "application/json")
+    @GetMapping(value = "/api/vendor_booking", produces = "application/json")
     public List<VendorBookings> getAllVendorBookings(){
         return vendorBookingService.getAllVendorBookings();
     }
 
-    @GetMapping(value = "/vendor_booking/{id}", produces = "application/json")
+    @GetMapping(value = "/api/vendor_booking/{id}", produces = "application/json")
     public VendorBookings getVendorBookingById(Long id){
         return vendorBookingService.getVendorBookingById(id);
     }
 
-    @PostMapping(value = "/vendor_booking", produces = "application/json")
+    @PostMapping(value = "/api/vendor_booking", produces = "application/json")
     public VendorBookings createVendorBookingById(VendorBookings vendorBooking){
         return vendorBookingService.createVendorBooking(vendorBooking);
     }
 
-    @PutMapping(value = "/vendor_booking/{id}", produces = "application/json")
+    @PutMapping(value = "/api/vendor_booking/{id}", produces = "application/json")
     public VendorBookings updateVendorBookingById(Long id, VendorBookings vendorBooking){
         return vendorBookingService.updateVendorBooking(id, vendorBooking);
     }
 
-    @DeleteMapping(value = "/vendor_booking/{id}", produces = "application/json")
+    @DeleteMapping(value = "/api/vendor_booking/{id}", produces = "application/json")
     public void deleteVendorBookingById(Long id){
         vendorBookingService.deleteVendorBooking(id);
     }

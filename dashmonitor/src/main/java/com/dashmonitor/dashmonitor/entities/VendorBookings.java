@@ -8,7 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,20 +35,28 @@ public class VendorBookings {
     public Instant updated_at;
 
     public VendorBookings(){
-        this("", Instant.now(), "", null, null, Instant.now(), Instant.now());
+        this("", Instant.now(), "", null, null);
     }
 
-    public VendorBookings(String agreedPrice, Instant startDateTime, String bookingstatus, Events eventId, VendorServices serviceId, Instant created_at, Instant updated_at){
+    public VendorBookings(String agreedPrice, Instant startDateTime, String bookingstatus, Events eventId, VendorServices serviceId){
         this.agreedPrice = agreedPrice;
         this.startDateTime = startDateTime;
         this.bookingstatus = bookingstatus;
         this.eventId = eventId;
         this.serviceId = serviceId;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     // setters
+    @PrePersist
+     public void onCreate(){
+        this.created_at = Instant.now();
+        this.updated_at = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updated_at = Instant.now();
+    }
 
     public void setAgreedPrice(String agreedPrice){
         this.agreedPrice = agreedPrice;

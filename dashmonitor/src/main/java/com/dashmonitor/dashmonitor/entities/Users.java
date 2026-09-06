@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,17 +23,21 @@ public class Users {
     public Instant createdAt;
 
     public Users(){
-        this("", "", "","", Instant.now());
+        this("", "", "","");
     }
-    public Users(String firstName, String lastName, String email, String password, Instant createdAt ){
+    public Users(String firstName, String lastName, String email, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.createdAt = createdAt;
+        // this.createdAt = createdAt;
     }
 
     // users table setters
+    @PrePersist
+    public void setCreatedAt(){
+        this.createdAt = Instant.now();
+    }
 
     public void setFirstName(String firstName){
         this.firstName = firstName;
@@ -50,10 +55,6 @@ public class Users {
     public void setPassword(String password){
         this.password = password;
     }
-     public void setCreatedAt(Instant created_at){
-        this.createdAt = created_at;
-    }
-
     // getters
 
     public Long getUserId(){

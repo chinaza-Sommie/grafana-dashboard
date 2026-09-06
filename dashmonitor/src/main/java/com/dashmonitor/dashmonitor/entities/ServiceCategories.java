@@ -30,6 +30,7 @@ public class ServiceCategories {
     }
 
     // setters
+    
 
     public void setCategoryName(String name){
         this.categoryName = name;
