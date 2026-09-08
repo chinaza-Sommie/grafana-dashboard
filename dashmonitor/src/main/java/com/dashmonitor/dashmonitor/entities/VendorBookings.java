@@ -31,8 +31,8 @@ public class VendorBookings {
     @JoinColumn(name = "serviceId")
     public VendorServices serviceId;
 
-    public Instant created_at; // this is needed because of changes to vendors status incase a vendor declines 
-    public Instant updated_at;
+    public Instant createdAt; // this is needed because of changes to vendors status incase a vendor declines 
+    public Instant updatedAt;
 
     public VendorBookings(){
         this("", Instant.now(), "", null, null);
@@ -46,16 +46,18 @@ public class VendorBookings {
         this.serviceId = serviceId;
     }
 
+
+
     // setters
     @PrePersist
      public void onCreate(){
-        this.created_at = Instant.now();
-        this.updated_at = Instant.now();
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
     @PreUpdate
     public void onUpdate(){
-        this.updated_at = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
     public void setAgreedPrice(String agreedPrice){
@@ -74,16 +76,8 @@ public class VendorBookings {
         this.eventId = eventId;
     }
 
-    public void setVendorServices(VendorServices serviceId){
+    public void setServiceId(VendorServices serviceId){
         this.serviceId = serviceId;
-    }
-
-    public void setCreated_at(Instant created_at){
-        this.created_at = created_at;
-    }
-
-    public void setUpdated_at(Instant updated_at){
-        this.updated_at = updated_at;
     }
 
     // getters
@@ -108,15 +102,15 @@ public class VendorBookings {
         return this.eventId;
     }
 
-    public VendorServices getVendorServices(){
+    public VendorServices getServiceId(){
         return this.serviceId;
     }
 
-    public Instant getCreated_at(){
-        return this.created_at;
+    public Instant getCreatedAt(){
+        return this.createdAt;
     }
 
-    public Instant getUpdated_at(){
-        return this.updated_at;
+    public Instant getUpdatedAt(){
+        return this.updatedAt;
     }
 }

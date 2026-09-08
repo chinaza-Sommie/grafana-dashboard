@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,14 +24,14 @@ public class Vendors {
     public String address;
     public String city;
     public String status;
-    public Instant created_at;
-    public Instant updated_at;
+    public Instant createdAt;
+    public Instant updatedAt;
 
     public Vendors(){
-        this("", "", "", "", "", "", "", Instant.now(), Instant.now());
+        this("", "", "", "", "", "", "");
     }
 
-    public Vendors(String name, String description, String email, String phone, String address, String city, String status, Instant created_at, Instant updated_at){
+    public Vendors(String name, String description, String email, String phone, String address, String city, String status){
         this.name = name;
         this.description = description;
         this.email = email;
@@ -37,11 +39,20 @@ public class Vendors {
         this.address = address;
         this.city = city;
         this.status = status;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     //setters
+    @PrePersist
+     public void onCreate(){
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt = Instant.now();
+    }
+    
 
     public void setName(String name){
         this.name = name;
@@ -69,14 +80,6 @@ public class Vendors {
 
     public void setStatus(String status){
         this.status = status;
-    }
-
-    public void setCreatedAt(Instant created_at){
-        this.created_at = created_at;
-    }
-
-    public void setUpdatedAt(Instant updated_at){
-        this.updated_at = updated_at;
     }
 
     // getters
@@ -110,10 +113,10 @@ public class Vendors {
     }
 
     public Instant getCreatedAt(){
-        return this.created_at;
+        return this.createdAt;
     }
 
     public Instant getUpdatedAt(){
-        return this.updated_at;
+        return this.updatedAt;
     }
 }
