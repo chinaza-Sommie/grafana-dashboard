@@ -29,10 +29,14 @@ public class UserService {
     }
 
     public Users updateUser(Long id, Users user){
-        Users updateUserDetails = userRepository.findById(id).get();
+        Users existingUser = userRepository.findById(id).get();
 
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(user.getPassword());
 
-        return updateUserDetails;
+        return userRepository.save(existingUser);
     }
 
     public void deleteUser(Long id){

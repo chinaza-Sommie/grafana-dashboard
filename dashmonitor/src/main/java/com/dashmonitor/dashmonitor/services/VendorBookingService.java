@@ -34,7 +34,7 @@ public class VendorBookingService {
         foundBooking.setStartDateTime(vendorBooking.getStartDateTime());
         foundBooking.setBookingstatus(vendorBooking.getBookingstatus());
         foundBooking.setEventId(vendorBooking.getEventId());
-        foundBooking.setVendorServices(vendorBooking.getVendorServices());
+        foundBooking.setServiceId(vendorBooking.getServiceId());
 
         return vendorBookingsRepository.save(foundBooking);
     }

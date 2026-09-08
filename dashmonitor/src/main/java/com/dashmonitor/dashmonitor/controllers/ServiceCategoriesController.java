@@ -23,30 +23,30 @@ public class ServiceCategoriesController {
         this.serviceCategoriesService = serviceCategoriesService;
     }
 
-    @GetMapping(value="/service_categories", produces = "application/json")
+    @GetMapping(value="/api/service_categories", produces = "application/json")
     public List<ServiceCategories> getAllServiceCategories(){
         return serviceCategoriesService.getAllServiceCategories();
     }
 
-    @GetMapping(value="/service_categories/{id}", produces = "application/json")
+    @GetMapping(value="/api/service_categories/{id}", produces = "application/json")
     public ServiceCategories getServiceCategoriesById(@PathVariable Long id) {
         return serviceCategoriesService.getServiceCategoriesById(id);
     }
 
-    @PostMapping(value="/service_categories/{id}", produces = "application/json")
+    @PostMapping(value="/api/service_categories", produces = "application/json")
     public ServiceCategories createServiceCategories(@RequestBody ServiceCategories serviceCategories) {
         
         return serviceCategoriesService.createServiceCategories(serviceCategories);
     }
     
-    @PutMapping(value="/service_categories/{id}", produces = "application/json")
+    @PutMapping(value="/api/service_categories/{id}", produces = "application/json")
     public ServiceCategories updateServiceCategoriesById(@PathVariable Long id, @RequestBody ServiceCategories serviceCategories) {
        return serviceCategoriesService.updateServiceCategories(id, serviceCategories);
     }
 
-    @DeleteMapping(value="/service_categories/{id}", produces = "application/json")
+    @DeleteMapping(value="/api/service_categories/{id}", produces = "application/json")
     public void deleteServiceCategories(@PathVariable Long id){
         serviceCategoriesService.deleteServiceCategories(id);
     }
-    // @RequestParam when to use it
+   
 }

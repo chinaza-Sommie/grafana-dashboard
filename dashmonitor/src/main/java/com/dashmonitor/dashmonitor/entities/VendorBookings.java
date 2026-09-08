@@ -8,7 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,24 +31,34 @@ public class VendorBookings {
     @JoinColumn(name = "serviceId")
     public VendorServices serviceId;
 
-    public Instant created_at; // this is needed because of changes to vendors status incase a vendor declines 
-    public Instant updated_at;
+    public Instant createdAt; // this is needed because of changes to vendors status incase a vendor declines 
+    public Instant updatedAt;
 
     public VendorBookings(){
-        this("", Instant.now(), "", null, null, Instant.now(), Instant.now());
+        this("", Instant.now(), "", null, null);
     }
 
-    public VendorBookings(String agreedPrice, Instant startDateTime, String bookingstatus, Events eventId, VendorServices serviceId, Instant created_at, Instant updated_at){
+    public VendorBookings(String agreedPrice, Instant startDateTime, String bookingstatus, Events eventId, VendorServices serviceId){
         this.agreedPrice = agreedPrice;
         this.startDateTime = startDateTime;
         this.bookingstatus = bookingstatus;
         this.eventId = eventId;
         this.serviceId = serviceId;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
+
+
     // setters
+    @PrePersist
+     public void onCreate(){
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt = Instant.now();
+    }
 
     public void setAgreedPrice(String agreedPrice){
         this.agreedPrice = agreedPrice;
@@ -65,16 +76,8 @@ public class VendorBookings {
         this.eventId = eventId;
     }
 
-    public void setVendorServices(VendorServices serviceId){
+    public void setServiceId(VendorServices serviceId){
         this.serviceId = serviceId;
-    }
-
-    public void setCreated_at(Instant created_at){
-        this.created_at = created_at;
-    }
-
-    public void setUpdated_at(Instant updated_at){
-        this.updated_at = updated_at;
     }
 
     // getters
@@ -99,15 +102,15 @@ public class VendorBookings {
         return this.eventId;
     }
 
-    public VendorServices getVendorServices(){
+    public VendorServices getServiceId(){
         return this.serviceId;
     }
 
-    public Instant getCreated_at(){
-        return this.created_at;
+    public Instant getCreatedAt(){
+        return this.createdAt;
     }
 
-    public Instant getUpdated_at(){
-        return this.updated_at;
+    public Instant getUpdatedAt(){
+        return this.updatedAt;
     }
 }

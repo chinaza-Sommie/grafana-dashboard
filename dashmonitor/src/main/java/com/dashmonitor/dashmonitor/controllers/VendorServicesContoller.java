@@ -23,27 +23,27 @@ public class VendorServicesContoller {
         this.vendorServicesService = vendorServicesService;
     }
 
-    @GetMapping( value= "/vendor_services", produces = "application/json")
+    @GetMapping( value= "/api/vendor_services", produces = "application/json")
     public List<VendorServices> getAllVendorServices(){
         return vendorServicesService.getAllVendorServices();
     }
 
-    @GetMapping(value = "/vendor_services/{id}", produces = "application/json")
+    @GetMapping(value = "/api/vendor_services/{id}", produces = "application/json")
     public VendorServices getVendorServicesById(@RequestParam Long id) {
         return vendorServicesService.getVendorServicesById(id);
     }
 
-    @PostMapping(value = "/vendor_services", produces = "application/json")
+    @PostMapping(value = "/api/vendor_services", produces = "application/json")
     public VendorServices createVendorServices(@RequestBody VendorServices vendorServices) { 
         return vendorServicesService.createVendorServices(vendorServices);
     }
 
-    @PutMapping(value = "vendor_services/{id}", produces= "application/json")
+    @PutMapping(value = "/api/vendor_services/{id}", produces= "application/json")
     public VendorServices putMethodName(@PathVariable Long id, @RequestBody VendorServices vendorServices) {
         return vendorServicesService.updateVendorServices(id, vendorServices);
     }
     
-    @DeleteMapping(value = "vendor_services/{id}", produces = "application/json")
+    @DeleteMapping(value = "/api/vendor_services/{id}", produces = "application/json")
     public void deleteUser(@PathVariable Long id){
         vendorServicesService.deleteVendorServices(id);
     }

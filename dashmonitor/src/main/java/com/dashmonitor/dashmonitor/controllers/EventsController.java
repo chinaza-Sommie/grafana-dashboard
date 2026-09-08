@@ -27,27 +27,27 @@ public class EventsController {
     }
 
     // check if i can do API/ events
-    @GetMapping(value = "/events", produces = "application/json")
+    @GetMapping(value = "/api/events", produces = "application/json")
     public List<Events> getAllEvents() {
         return eventsService.getAllEvents();
     }
 
-    @GetMapping(value = "/events/{id}", produces = "application/json")
-    public Events getMethodName(@RequestParam Long id) {
+    @GetMapping(value = "/api/events/{id}", produces = "application/json")
+    public Events getMethodName(@PathVariable Long id) {
         return eventsService.getEventsById(id);
     }
     
-    @PostMapping(value = "/events", produces = "application/json")
+    @PostMapping(value = "/api/events", produces = "application/json")
     public Events createEvent(@RequestBody Events event) {
         return eventsService.createEvents(event);
     }
     
-    @PutMapping(value = "/events/{id}", produces = "application/json")
+    @PutMapping(value = "/api/events/{id}", produces = "application/json")
     public Events updateEvent(@PathVariable Long id, @RequestBody Events event){
         return eventsService.updateEvents(id, event);
     }
 
-    @DeleteMapping(value = "/events/{id}", produces = "application/json")
+    @DeleteMapping(value = "/api/events/{id}", produces = "application/json")
     public void deleteEvent(@PathVariable Long id){
         eventsService.deleteEvents(id);
     }

@@ -22,33 +22,32 @@ public class UsersController {
     public UserService userService;
 
     public UsersController(UserService userService){
-
+        this.userService = userService;
     }
     // get all users, get user by Id, 
-    @GetMapping( value= "/users", produces = "application/json")
+    @GetMapping( value= "/api/users", produces = "application/json")
     public List<Users> getUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/users/{id}", produces = "application/json")
-    public Users getMethodName(@RequestParam Long id) {
+    @GetMapping(value = "/api/users/{id}", produces = "application/json")
+    public Users getMethodName(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
-    @PostMapping(value = "/users", produces = "application/json")
+    @PostMapping(value = "/api/users", produces = "application/json")
     public Users createUser(@RequestBody Users user) {
         
         return userService.createUser(user);
     }
 
-    @PutMapping(value = "users/{id}", produces= "application/json")
+    @PutMapping(value = "/api/users/{id}", produces= "application/json")
     public Users putMethodName(@PathVariable Long id, @RequestBody Users user) {
         return userService.updateUser(id, user);
     }
     
-    @DeleteMapping(value = "users/{id}", produces = "application/json")
+    @DeleteMapping(value = "/api/users/{id}", produces = "application/json")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
     }
-
 }

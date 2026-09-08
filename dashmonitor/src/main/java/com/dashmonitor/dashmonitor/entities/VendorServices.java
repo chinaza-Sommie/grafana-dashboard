@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,8 +22,8 @@ public class VendorServices {
     public String name;   
     public String description;
     public String basePrice;
-    public Instant created_at;
-    public Instant updated_at;
+    public Instant createdAt;
+    public Instant updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "vendorsId")
@@ -35,17 +37,27 @@ public class VendorServices {
         this("", "", "", Instant.now(), Instant.now(), null, null);
     }
 
-    public VendorServices(String name, String description, String basePrice, Instant created_at, Instant updated_at, Vendors vendorsId, ServiceCategories serviceCategoryId){
+    public VendorServices(String name, String description, String basePrice, Instant createdAt, Instant updatedAt, Vendors vendorsId, ServiceCategories serviceCategoryId){
         this.name = name;
         this.description = description;
         this.basePrice = basePrice;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.vendorsId = vendorsId;
         this.serviceCategoryId = serviceCategoryId;
     }
 
     // setters
+    @PrePersist
+     public void onCreate(){
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt = Instant.now();
+    }
 
     public void setName(String name){
         this.name = name;
@@ -57,14 +69,6 @@ public class VendorServices {
 
     public void setBasePrice(String basePrice){
         this.basePrice = basePrice;
-    }
-
-    public void setCreated_at(Instant created_at){
-        this.created_at = created_at;
-    }
-
-    public void setUpdated_at(Instant updated_at){
-        this.updated_at = updated_at;
     }
 
     public void setVendorsId(Vendors vendorsId){
@@ -93,12 +97,12 @@ public class VendorServices {
         return this.basePrice;
     }
 
-    public Instant getCreated_at(){
-        return this.created_at;
+    public Instant getCreatedAt(){
+        return this.createdAt;
     }
 
-    public Instant getUpdated_at(){
-        return this.updated_at;
+    public Instant getUpdatedAt(){
+        return this.updatedAt;
     }
 
     public Vendors getVendorsId(){
