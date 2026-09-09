@@ -1,29 +1,38 @@
 import { useEffect, useState } from 'react';
+import { api, type User } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 // Define a TypeScript interface for our API response
-interface Greeting {
-  message: string;
+interface LoginUserProp {
+  loginUser: User | null;
+  onSetLoginUser: (loginUser: User) => void;
 }
 
-function Login() {
+function Login({loginUser, onSetLoginUser}: LoginUserProp) {
+    const navigate = useNavigate()
     const[email,setEmail] = useState<string>('');
     const[password,setPasword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
-    const login = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const login = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
 
         if(email === null || email === "" || password === null || password === ""){
             return setError("Please, enter correct details");
         }
 
-        if(password.length < 6 ){
-            return setError("Password needs to be more than 6 characters. Please try again!");
-        }
+        // if(password.length < 6 ){
+        //     return setError("Password needs to be more than 6 characters. Please try again!");
+        // }
 
-        return "Login successful";
+        const data = { email, password};
+        const processLoginUserData = await api.loginUser(data);
+        if(!processLoginUserData){
+            setError("something went wrong");
+            return;
+        }
+        onSetLoginUser(processLoginUserData);
+        navigate('/dashboard');
         
     }
 
