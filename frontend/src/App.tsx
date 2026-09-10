@@ -15,7 +15,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Login loginUser={loginUser} onSetLoginUser={setLoginUser} />} />
-      <Route path='/r' element={<Register onSetUser={setUser} />}  />
+      <Route path='/register' element={<Register onSetUser={setUser} />}  />
       <Route path='/dashboard' element={<Dashboard loginUser={loginUser} />} />
     </Routes>
   );

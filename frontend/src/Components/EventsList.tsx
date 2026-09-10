@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import EventCard from './EventCard';
+import type { User } from '../api';
 
 // Define a TypeScript interface for our API response
-interface Greeting {
-  message: string;
+interface EventListProp {
+  user: User | null;
 }
 
-function EventsList() {
+function EventsList({user}: EventListProp) {
 
+    useEffect(() => {
+        console.log(user?.userId);
+        
+    })
     return (
         <>
             <div className='flex justify-end'>
@@ -16,6 +21,7 @@ function EventsList() {
             </div>
             <div className='grid grid-cols-4 gap-8'>
                 <EventCard/>
+                
             </div>
         </>
     );

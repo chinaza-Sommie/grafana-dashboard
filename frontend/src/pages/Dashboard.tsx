@@ -5,6 +5,7 @@ import EventForm from '../Components/EventForm';
 import Profile from '../Components/Profile';
 import EventsList from '../Components/EventsList';
 import type { User } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 // Define a TypeScript interface for our API response
 interface DashboardProp {
@@ -12,16 +13,22 @@ interface DashboardProp {
 }
 
 function Dashboard({loginUser} : DashboardProp) {
+    const navigate = useNavigate();
 
+    if(loginUser?.userId === undefined ){
+        // setError("You must login");
+        // navigate('/');
+        return;
+    }
     console.log(loginUser);
     return (
         <div>
             <Navbar />
 
             <div className=' pt-[5%] mx-[10%] px-5'>
-                <EventsList />
-                {/* <EventForm/> */}
-                {/* <Profile/> */}
+                <EventsList user={loginUser} />
+                {/* <EventForm userId={loginUser}/> */}
+                {/* <Profile loginUser={loginUser}/> */}
             </div>
 
         </div>

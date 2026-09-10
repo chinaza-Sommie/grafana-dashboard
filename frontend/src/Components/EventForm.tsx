@@ -1,28 +1,36 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
+import { useNavigate } from 'react-router-dom';
+import { api, type User } from '../api';
 
 // Define a TypeScript interface for our API response
-interface Greeting {
-  message: string;
+interface EventFormProp {
+  userId: User | null;
 }
 
-function EventForm() {
-    const[eventName, setEventName] = useState<string>('');
-    const[description, setDescription] = useState<string>('');
+function EventForm({userId}: EventFormProp) {
+    const navigate = useNavigate();
+    const[name, setname] = useState<string>('');
+    const[eventType, seteventType] = useState<string>('');
     const[city, setCity] = useState<string>('');
     const[guestCount, setGuestCount] = useState<number>(0);
     const[startDateTime, setStartDateTime] = useState<string>('');
     const[endDateTime, setEndDateTime] = useState<string>('');
     const[venue, setVenue] = useState<string>('');
+    const[totalAmount, setTotalAmount] = useState<number>(0);
     // const[customVenue, setCustomVenue] = useState<string>('');
     const [foodAndDrinks, setFoodAndDrinks] = useState<string>('');
     const [entertainment, setEntertainment] = useState<string>('');
     const[error, setError] = useState<string | null>(null);
+    const categories = ["venues", "food and drinks","entertainment"]
+    console.log(userId);
 
-
-    const createEvent = (e: React.SubmitEvent<HTMLFormElement>) => {
+    if(userId === null){
+        return;
+    }
+    const createEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!eventName.trim() || !description.trim() || !city.trim() || guestCount <= 0 || !startDateTime || !endDateTime ||
+        if(!name.trim() || !eventType.trim() || !city.trim() || guestCount <= 0 || !startDateTime || !endDateTime ||
         !venue || !foodAndDrinks || !entertainment ){
 
             return setError("All feilds are required. Please, try again.")
@@ -40,16 +48,31 @@ function EventForm() {
             if(end <= start){
                 return setError("End date must be after the start date and time")
             }
-
-            
         }
 
-        console.log("Event created successfully")
-        const eventData = { eventName, description, city, guestCount, startDateTime, endDateTime, venue, foodAndDrinks, entertainment, };
-
+        setError(null);
+        const eventData = { name, eventType, city, guestCount, 
+            startDateTime: new Date(startDateTime).toISOString(),
+            endDateTime: new Date(endDateTime).toISOString(),
+            userId,
+            totalAmount,
+            status: "preparing"
+        };
         console.log(eventData);
-    }
+        const createEventData = await api.addEvent(eventData);
+        console.log(createEventData);
+        console.log("Event created successfully");
+        if(!createEventData){
+            console.log("something went wrong");
+            return;
+        }
+        // create vendor booking
 
+        for(let i = 0; i < categories.length; i++){
+            // const createVendorBooking = await api.
+        }
+    }
+    
     return (
         <div className='mx-[30%]'>
             <h4> Create Event</h4>
@@ -61,13 +84,13 @@ function EventForm() {
             <form onSubmit={createEvent}>
                 <input type='text' placeholder='Enter Event Name'
                 className='rounded'
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}/>
+                value={name}
+                onChange={(e) => setname(e.target.value)}/>
 
-                <input type='text' placeholder='Enter Description'
+                <input type='text' placeholder='Enter eventType'
                 className='rounded'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}/>
+                value={eventType}
+                onChange={(e) => seteventType(e.target.value)}/>
 
                 {/* use below to search by location */}
                 <div className="grid grid-cols-2 gap-3">
@@ -151,6 +174,7 @@ function EventForm() {
                 </div>
                 <div className='flex justify-end mb-5'>
                     <b> Total: £500</b>
+                    {/* <b> Total: ${totalAmount}</b> */}
                 </div>
                 
                 <input type='submit' value={'Create Event'} name='Submit' className='rounded'/>

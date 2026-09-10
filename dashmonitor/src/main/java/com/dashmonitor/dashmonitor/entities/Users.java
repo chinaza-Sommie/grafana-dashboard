@@ -1,10 +1,13 @@
 package com.dashmonitor.dashmonitor.entities;
 
 import java.time.Instant;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
@@ -22,6 +25,9 @@ public class Users {
     public String password;
     public Instant createdAt;
 
+    // @OneToMany(mappedBy = "user") had issue with this one (  JSON serialization issue ) due to depth of serialization
+    // public List<Events> events;
+// use custom get in repository instead ...
     public Users(){
         this("", "", "","");
     }
@@ -58,7 +64,7 @@ public class Users {
     // getters
 
     public Long getUserId(){
-        return userId;
+        return this.userId;
     }
 
     public String getFirstName(){

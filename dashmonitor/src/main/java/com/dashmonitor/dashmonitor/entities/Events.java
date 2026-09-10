@@ -31,7 +31,7 @@ public class Events {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public Users userId;
+    public Users user;
 
     
 
@@ -40,7 +40,7 @@ public class Events {
     }
 
     public Events(String name, String eventType, Instant startDateTime, Instant endDateTime, String totalAmount, Integer guestCount,
-                    String status, Users userId){
+                    String status, Users user){
         this.name = name;
         this.eventType = eventType;
         this.startDateTime = startDateTime;
@@ -48,7 +48,7 @@ public class Events {
         this.totalAmount = totalAmount;
         this.guestCount = guestCount;
         this.status = status;
-        this.userId = userId;
+        this.user = user;
     
     }
 
@@ -92,8 +92,8 @@ public class Events {
        this.status = status;
     }
 
-    public void setUserId(Users userId){
-        this.userId = userId;
+    public void setUserId(Users user){
+        this.user = user;
     }
 
     // getters
@@ -138,9 +138,14 @@ public class Events {
         return this.updated_at;
     }
 
-    public Users getUserId(){
-        return this.userId;
+    public Users getUser(){
+        return this.user;
     }
 
+//     testdata:
+//     {
+//   "email": "china@gmail.com",
+//   "password": "cccccc"
+// }
 
 }

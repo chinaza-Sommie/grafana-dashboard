@@ -3,6 +3,7 @@ package com.dashmonitor.dashmonitor.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dashmonitor.dashmonitor.entities.Events;
+import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.services.EventsService;
 
 import java.util.List;
@@ -54,5 +55,10 @@ public class EventsController {
     @DeleteMapping(value = "/api/events/{id}", produces = "application/json")
     public void deleteEvent(@PathVariable Long id){
         eventsService.deleteEvents(id);
+    }
+
+    @GetMapping(value = "/api/events/user/{userId}", produces = "application/json")
+    public List<Events> getEventsByUserId(@PathVariable Long userId) {
+        return eventsService.getEventsByUserId(userId);
     }
 }

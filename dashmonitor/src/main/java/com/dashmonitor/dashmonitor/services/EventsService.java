@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.dashmonitor.dashmonitor.entities.Events;
+import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.repositories.EventsRepository;
 
 @Service
@@ -37,12 +38,17 @@ public class EventsService {
         existingEvents.setTotalAmount(events.getTotalAmount());
         existingEvents.setGuestCount(events.getGuestCount());
         existingEvents.setStatus(events.getStatus());
-        existingEvents.setUserId(events.getUserId());
+        existingEvents.setUserId(events.getUser());
         
-        return eventsRepository.save(events);
+        return eventsRepository.save(existingEvents);
     }
 
     public void deleteEvents(Long id){
         eventsRepository.deleteById(id);
     }
+
+    public List<Events> getEventsByUserId(Long userId){
+        return eventsRepository.findByUser_UserId(userId);
+    }
+    // biome for code formatting in js (linter)
 }
