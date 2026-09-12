@@ -11,6 +11,7 @@ export interface LoginUser{
 }
 // const eventData = { eventName, description, city, guestCount, startDateTime, endDateTime, userId};
 export interface Event{
+    eventId: number,
     name: string,
     eventType: string,
     city: string,
@@ -18,17 +19,27 @@ export interface Event{
     startDateTime: string,
     endDateTime: string,
     // status: "prepping" | "inprogress" | "completed",
-    userId: User;
-    totalAmount: number;
+    user: User,
+    totalAmount: string,
     status: string,
-    createdAt: Date;
+    createdAt: string;
 }
-
+// {
+//         "agreedPrice": "",
+//         "startDateTime": "2026-09-06T23:30:38.216646Z",
+//         "bookingstatus": "",
+//         "eventId": null,
+//         "serviceId": null,
+//         "bookingId": 1,
+//         "createdAt": "2026-09-06T23:30:38.228803Z",
+//         "updatedAt": "2026-09-06T23:30:38.228808Z"
+//     },
 export interface VendorBooking{
+    bookingId: number,
     agreedPrice: string,
     bookingstatus: string,
     serviceId: VendorServices,
-    bookingId: 1,
+    eventId: Event,
 }
 
 export interface Categories{
@@ -38,10 +49,13 @@ export interface Categories{
 }
 
 export interface VendorServices{
+    serviceId: number;
     name: string,
     description: string,
+    // agreedAmount: string;
     basePrice: number,
-    // vendorsId: Vendor,
+    serviceCategoryId: Categories;
+    vendorsId: Vendors,
 }
 
 export interface Vendors{
@@ -55,14 +69,27 @@ export interface Vendors{
 }
 
 export interface Api {
+    // user service api
     addUser(data: Omit<User, 'userId'>): Promise<User>;
     loginUser(data: LoginUser): Promise<User>;
-    addEvent(data: Omit<Event, 'status' | 'createdAt'>): Promise<Event>;
-    getAllCategories(): Promise<Categories[]>;
-    getVendorServiceById(id: number): Promise<VendorServices | undefined>;
-    getVendorsById(id: number): Promise<Vendors | undefined>;
-    addVendorBooking(data: Omit<VendorBooking, 'bookingId' | 'serviceId'>): Promise<VendorBooking>;
+
+    // event service api
+    addEvent(data: Omit<Event, 'eventId' | 'status' | 'createdAt'>): Promise<Event>; 
     getEventsByUsersId(id: number): Promise<Event[]>;
+    removeEventById(id: number): Promise<void>;
+
+    // categories service api
+    getAllCategories(): Promise<Categories[]>;
+
+    // venderService service api 
+    getAllVendorServices(): Promise<VendorServices[]>;
+    getVendorServiceById(id: number): Promise<VendorServices | undefined>;
+
+    // vendors api
+    getVendorsById(id: number): Promise<Vendors | undefined>;
+
+    // vvendorBooking api
+    addVendorBooking(data: Omit<VendorBooking, 'bookingId' | 'serviceId'>): Promise<VendorBooking>;
 }
 
 const BASE_URL = "http://localhost:8080/api";
@@ -121,6 +148,11 @@ const httpApi: Api = {
 
     // vendor services api 
 
+    async getAllVendorServices() {
+        const result = await fetch(`${BASE_URL}/vendor_services`);
+        ensureOk(result, `get All Services offered`);
+        return (await result.json()) as VendorServices[];
+    },
     async getVendorServiceById(id) {
         const result = await fetch(`${BASE_URL}/vendor_services/${id}`);
         if(result.status === 404){
@@ -152,11 +184,20 @@ const httpApi: Api = {
     },
 
     async getEventsByUsersId(id){
-        const result = await fetch(`${BASE_URL}/api/events/user/${id}`);
+        const result = await fetch(`${BASE_URL}/events/user/${id}`);
         ensureOk(result, `get events for user id ${id} `);
         return (await result.json()) as Event[];
     },
-    
+
+    async removeEventById(id) {
+        const response = await fetch(`${BASE_URL}/events/${id}`, {
+            method: 'DELETE',
+
+        });
+        ensureOk(response, `remove event with id ${id}`);
+
+    },
+
 }
 
 export const api: Api = httpApi;

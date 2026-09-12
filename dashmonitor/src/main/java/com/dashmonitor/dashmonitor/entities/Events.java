@@ -23,7 +23,7 @@ public class Events {
     public String eventType;
     public Instant startDateTime;
     public Instant endDateTime;
-    public String totalAmount;
+    public String totalAmount; // CHABGE TO INTEGER ( IF DEING RITH ONE CURRENCY)
     public Integer guestCount;
     public String status;
     public Instant created_at;

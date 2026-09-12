@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dashmonitor.dashmonitor.ExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.services.UserService;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +57,7 @@ public class UsersController {
     }
 
     @PostMapping(value = "/api/login", produces = "application/json")
-    public Users loginUser(@RequestBody Users user) {
+    public Users loginUser(@RequestBody Users user) throws ExceptionHandler{
         
         return userService.loginUser(user.getEmail(), user.getPassword());
     }

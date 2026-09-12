@@ -1,26 +1,28 @@
+import type { Event } from "../api";
 
 
 // Define a TypeScript interface for our API response
-interface Greeting {
-  message: string;
+interface EachEvent {
+  eventData: Event;
+  onDelete: (eventId: number) => void;
 }
 
-function EventCard() {
+function EventCard({eventData, onDelete}: EachEvent) {
 
     return (
         <div className='border p-5 rounded-lg'>
-            <h5> Birthday Party</h5>
-                <p> 25th birthday party!!!</p>
+            <h5> {eventData.name}</h5>
+                <p> {eventData.eventType}</p>
 
                 <div>
                     <p>venue:</p>
-                    <p>Date:</p>
+                    <p>Date: {eventData.createdAt}</p>
                     <p>Time:</p>
                 </div>
 
                 <div className='mt-5 flex justify-end gap-3'>
                     <button > Edit </button>
-                    <button> Delete </button>
+                    <button onClick={() => { onDelete(eventData.eventId)}}> Delete </button>
                 </div>
         </div>
     );

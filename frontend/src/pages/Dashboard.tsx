@@ -26,8 +26,8 @@ function Dashboard({loginUser} : DashboardProp) {
             <Navbar />
 
             <div className=' pt-[5%] mx-[10%] px-5'>
-                <EventsList user={loginUser} />
-                {/* <EventForm userId={loginUser}/> */}
+                {/* <EventsList user={loginUser} /> */}
+                <EventForm user={loginUser}/>
                 {/* <Profile loginUser={loginUser}/> */}
             </div>
 

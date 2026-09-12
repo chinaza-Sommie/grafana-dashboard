@@ -54,6 +54,7 @@ public class EventsController {
 
     @DeleteMapping(value = "/api/events/{id}", produces = "application/json")
     public void deleteEvent(@PathVariable Long id){
+        
         eventsService.deleteEvents(id);
     }
 

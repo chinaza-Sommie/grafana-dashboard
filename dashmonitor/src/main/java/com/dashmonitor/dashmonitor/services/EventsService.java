@@ -51,4 +51,7 @@ public class EventsService {
         return eventsRepository.findByUser_UserId(userId);
     }
     // biome for code formatting in js (linter)
+    // - GENRATE  A UUID MYSELF . ALSO ADD A PREFIX TO MAKE IT READABLE EVERYWHERE EG. EVENTS-UUID
+    // PROCESS THE EVETS UNDER CREATE ENDPOINT 
+    // USE TRANSACTIONS 
 }

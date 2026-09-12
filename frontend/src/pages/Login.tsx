@@ -28,7 +28,7 @@ function Login({loginUser, onSetLoginUser}: LoginUserProp) {
         const data = { email, password};
         const processLoginUserData = await api.loginUser(data);
         if(!processLoginUserData){
-            setError("something went wrong");
+            setError("something went wrong. Try again");
             return;
         }
         onSetLoginUser(processLoginUserData);

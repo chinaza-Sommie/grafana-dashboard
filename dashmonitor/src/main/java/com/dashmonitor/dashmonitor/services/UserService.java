@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
+import com.dashmonitor.dashmonitor.ExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.repositories.UserRepository;
 
@@ -54,11 +55,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Users loginUser(String email, String password){
+    public Users loginUser(String email, String password) throws ExceptionHandler {
         Optional<Users> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            throw new RuntimeException("user does not exist. Please check details and try again");
+            throw new ExceptionHandler("user does not exist. Please check details and try again");
         }
 
         Users currentUser = user.get();
