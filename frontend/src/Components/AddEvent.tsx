@@ -7,9 +7,11 @@ import { api, type User, type VendorServices, type Event } from '../api';
 interface EventFormProp {
   user: User | null;
   onPageToggle: (setActivePage: string) => void;
+  eventToEdit: Event | null;
+  onSetEventToEdit: (eventToEdit: Event | null) => void;
 }
 
-function EventEvent({user, onPageToggle}: EventFormProp) {
+function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventFormProp) {
     const navigate = useNavigate();
     const[eventFormComplete, seteventFormComplete] = useState<boolean>(false);
     const[allVendorServices, setAllVendorServices] = useState<VendorServices[]>([]);
@@ -18,6 +20,7 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
     const[eventType, seteventType] = useState<string>('');
     const[city, setCity] = useState<string>('');
     const[guestCount, setGuestCount] = useState<number>(0);
+    const[status, setStatus] = useState<string>('pending')
     const[startDateTime, setStartDateTime] = useState<string>('');
     const[endDateTime, setEndDateTime] = useState<string>('');
     const[venue, setVenue] = useState<string>('');
@@ -44,7 +47,22 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
             setAllVendorServices(getAllVendorServices);
             return getAllVendorServices;
         }
+        const getEventToUpdate = () => {
+            if(eventToEdit == null){
+                return;
+            }
+
+            console.log(eventToEdit);
+            setname(eventToEdit.name);
+            seteventType(eventToEdit.eventType);
+            setGuestCount(eventToEdit.guestCount);
+            setStatus(eventToEdit.status);
+            setStartDateTime(eventToEdit.startDateTime.slice(0, 16));
+            setEndDateTime(eventToEdit.endDateTime.slice(0, 16));
+            console.log(eventToEdit.name);
+        }
         
+        getEventToUpdate();
         fetchCategories();
         fetchAllVendorServices();
     }, [user]);
@@ -77,15 +95,14 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
             endDateTime: new Date(endDateTime).toISOString(),
             user,
             totalAmount,
-            status: "preparing"
+            status
         };
         const createEventData = await api.addEvent(eventData);
         console.log("Event created successfully");
         if(!createEventData){
-            console.log("something went wrong");
+            // console.log("something went wrong");
             return;
         }
-        console.log(createEventData);
         seteventFormComplete(true);
         setEventData(createEventData);
 
@@ -93,7 +110,6 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
 
     const findServiceById = (serviceId: string)=> {
        const getService = allVendorServices.find(service => service.serviceId === Number(serviceId));
-       console.log(getService);
        return getService;
     }
 
@@ -141,11 +157,26 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
         
     }, [venue, foodAndDrinks, entertainment, allVendorServices, categories])
 
-
+    const handleUpdateEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(eventToEdit === null){
+            return;
+        }
+        console.log("handle update button")
+        const updateData = {name, eventType, city, guestCount, 
+            startDateTime: new Date(startDateTime).toISOString(),
+            endDateTime: new Date(endDateTime).toISOString(),
+            user,
+            totalAmount,
+            status}
+        
+        const updateEvent = await api.updateEvent(eventToEdit.eventId , updateData);
+        console.log(updateEvent);
+    }
     
     return (
         <div className='mx-[30%]'>
-            <p className='text-[14px] mb-4' onClick={() => onPageToggle('events')}> ← Back to Dashboard </p>
+            <p className='text-[14px] mb-4' onClick={() => {onPageToggle('events') ; onSetEventToEdit(null)}}> ← Back to Dashboard </p>
             <h4> {!eventFormComplete ? 'Create Event': 'Lets Plan Your Event'}</h4>
             
             {error && (
@@ -154,7 +185,7 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
 
             {
                 !eventFormComplete && (
-                    <form onSubmit={createEvent}>
+                    <form onSubmit={eventToEdit === null ? createEvent : handleUpdateEvent}>
                         <input type='text' placeholder='Enter Event Name'
                         className='rounded'
                         value={name}
@@ -265,5 +296,5 @@ function EventEvent({user, onPageToggle}: EventFormProp) {
     );
 }
 
-export default EventEvent;
+export default AddEvent;
 

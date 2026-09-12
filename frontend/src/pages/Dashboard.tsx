@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
-// import Events from '../Components/EventsList';
-import EventForm from '../Components/AddEvent';
+import AddEvent from '../Components/AddEvent';
 import Profile from '../Components/Profile';
 import EventsList from '../Components/EventsList';
-import type { User } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { api, type Event, type User } from '../api';
 
 // Define a TypeScript interface for our API response
 interface DashboardProp {
@@ -14,29 +12,32 @@ interface DashboardProp {
 
 function Dashboard({loginUser} : DashboardProp) {
     const[activePage, setActivePage] = useState('events');
-    const navigate = useNavigate();
+    const[eventToEdit, setEventToEdit] = useState<Event | null>(null);
+    // const navigate = useNavigate();
 
     if(loginUser?.userId === undefined ){
         // setError("You must login");
         // navigate('/');
-        return;
+        return null;
     }
-    console.log(loginUser);
+
+    
     return (
         <div>
             <Navbar onPageToggle={setActivePage} loginUser={loginUser.firstName} />
 
             <div className=' pt-[5%] mx-[10%] px-5'>
                 { activePage === 'events' && (
-                    <EventsList user={loginUser} onPageToggle={setActivePage} activePage={activePage} />
+                    <EventsList user={loginUser} onPageToggle={setActivePage} activePage={activePage} onSetEventToEdit={setEventToEdit}
+                     />
                 )}
 
                 { activePage === 'addEvent' && (
-                    <EventForm user={loginUser} onPageToggle={setActivePage} />
+                    <AddEvent user={loginUser} onPageToggle={setActivePage} eventToEdit={eventToEdit} onSetEventToEdit={setEventToEdit}  />
                 )}
 
                 {activePage === 'profile' && (
-                    <Profile loginUser={loginUser} onPageToggle={setActivePage} />
+                    <Profile loginUser={loginUser} onPageToggle={setActivePage}  />
                 )}
             </div>
 

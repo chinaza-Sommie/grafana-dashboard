@@ -4,10 +4,12 @@ import type { Event } from "../api";
 // Define a TypeScript interface for our API response
 interface EachEvent {
   eventData: Event;
+  onHandleUpdate: (event: Event)=> void;
   onDelete: (eventId: number) => void;
 }
 
-function EventCard({eventData, onDelete}: EachEvent) {
+function EventCard({eventData, onDelete, onHandleUpdate}: EachEvent) {
+
 
     return (
         <div className='border p-5 rounded-lg'>
@@ -21,7 +23,7 @@ function EventCard({eventData, onDelete}: EachEvent) {
                 </div>
 
                 <div className='mt-5 flex justify-end gap-3'>
-                    <button > Edit </button>
+                    <button onClick={()=> onHandleUpdate(eventData)}> Edit </button>
                     <button onClick={() => { onDelete(eventData.eventId)}}> Delete </button>
                 </div>
         </div>

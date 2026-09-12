@@ -76,6 +76,7 @@ export interface Api {
     // event service api
     addEvent(data: Omit<Event, 'eventId' | 'status' | 'createdAt'>): Promise<Event>; 
     getEventsByUsersId(id: number): Promise<Event[]>;
+    updateEvent(id: number , Patch: Omit<Event, 'eventId' | 'status' | 'createdAt'>): Promise<Event>;
     removeEventById(id: number): Promise<void>;
 
     // categories service api
@@ -129,15 +130,45 @@ const httpApi: Api = {
         return (await res.json()) as User;
     },
 
+    // event apis
+
     async addEvent(data){
-        const res = await fetch(`${BASE_URL}/events` , {
+        const result = await fetch(`${BASE_URL}/events` , {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),
         })
 
-        ensureOk(res, `add event named ${data.name}`);
-        return (await res.json()) as Event;
+        ensureOk(result, `add event named ${data.name}`);
+        return (await result.json()) as Event;
+    },
+
+    async getEventsByUsersId(id){
+        const result = await fetch(`${BASE_URL}/events/user/${id}`);
+        ensureOk(result, `get events for user id ${id} `);
+        return (await result.json()) as Event[];
+    },
+
+    async updateEvent(id, patch) {
+        const result = await fetch(`${BASE_URL}/events/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(patch),
+        });
+
+        ensureOk(result, `update event for id ${id}`);
+        return (await result.json()) as Event;
+    },
+
+    async removeEventById(id) {
+        const response = await fetch(`${BASE_URL}/events/${id}`, {
+            method: 'DELETE',
+
+        });
+        ensureOk(response, `remove event with id ${id}`);
+
     },
 
     async getAllCategories(){
@@ -181,21 +212,6 @@ const httpApi: Api = {
         })
         ensureOk(result, `add vendor booking`);
         return (await result.json()) as VendorBooking;
-    },
-
-    async getEventsByUsersId(id){
-        const result = await fetch(`${BASE_URL}/events/user/${id}`);
-        ensureOk(result, `get events for user id ${id} `);
-        return (await result.json()) as Event[];
-    },
-
-    async removeEventById(id) {
-        const response = await fetch(`${BASE_URL}/events/${id}`, {
-            method: 'DELETE',
-
-        });
-        ensureOk(response, `remove event with id ${id}`);
-
     },
 
 }

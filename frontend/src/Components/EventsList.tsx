@@ -5,21 +5,26 @@ import { api, type Event, type User } from '../api';
 
 // Define a TypeScript interface for our API response
 interface EventListProp {
-  user: User;
-  activePage: string;
-  onPageToggle: (activePage: string)=> void;
+    user: User;
+    activePage: string;
+    onPageToggle: (activePage: string)=> void;
+    onSetEventToEdit: (eventToEdit: Event) => void;
 }
 
-function EventsList({user, onPageToggle, activePage}: EventListProp) {
+function EventsList({user, onPageToggle, activePage, onSetEventToEdit}: EventListProp) {
     const[usersEvents, setUsersEvents] = useState<Event[]>([]);
     
-    if(!usersEvents){
-        console.log(undefined);
-    }
+    // if(!usersEvents){
+    //     console.log(undefined);
+    // }
     const fetchEvents = async (userId: number) => {
-            console.log(user?.userId);
             const getUsersEvents = await api.getEventsByUsersId(userId);
             setUsersEvents(getUsersEvents);
+    }
+
+    const handleUpdateEvents = async (event: Event) => {
+        onSetEventToEdit(event);
+        onPageToggle('addEvent');
     }
 
     useEffect(() => {
@@ -28,9 +33,11 @@ function EventsList({user, onPageToggle, activePage}: EventListProp) {
 
     const handleDelete = async (eventId: number) => {
         await api.removeEventById(eventId);
+        // onFetchEvents(user.userId);
         fetchEvents(user.userId);
     }
-
+    
+    
 
     return (
         <>
@@ -40,7 +47,7 @@ function EventsList({user, onPageToggle, activePage}: EventListProp) {
             <div className='grid grid-cols-4 gap-8'>
                 {
                     usersEvents.map((event) => (
-                        <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} />
+                        <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} onHandleUpdate={handleUpdateEvents} />
                     ))
                 }
                 
@@ -50,3 +57,45 @@ function EventsList({user, onPageToggle, activePage}: EventListProp) {
 }
 
 export default EventsList;
+
+// import { useEffect, useState } from 'react';
+// import Navbar from './Navbar';
+// import EventCard from './EventCard';
+// import { api, type Event, type User } from '../api';
+
+// // Define a TypeScript interface for our API response
+// interface EventListProp {
+//   user: User;
+//   activePage: string;
+//   onPageToggle: (activePage: string)=> void;
+//   usersEvents: Event;
+//   onSetUsersEvents: (usersEvents: Event)=> void;
+// }
+
+// function EventsList({user, onPageToggle, activePage,usersEvents}: EventListProp) {
+    
+
+//     const handleDelete = async (eventId: number) => {
+//         await api.removeEventById(eventId);
+//         fetchEvents(user.userId);
+//     }
+
+
+//     return (
+//         <>
+//             <div className='flex justify-end'>
+//                 <button className='button mb-5 hover:cursor-pointer' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
+//             </div>
+//             <div className='grid grid-cols-4 gap-8'>
+//                 {
+//                     usersEvents.map((event) => (
+//                         <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} />
+//                     ))
+//                 }
+                
+//             </div>
+//         </>
+//     );
+// }
+
+// export default EventsList;
