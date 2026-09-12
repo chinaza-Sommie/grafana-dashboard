@@ -20,7 +20,7 @@ export interface Event{
     endDateTime: string,
     // status: "prepping" | "inprogress" | "completed",
     user: User,
-    totalAmount: string,
+    totalAmount: number,
     status: string,
     createdAt: string;
 }
@@ -174,7 +174,7 @@ const httpApi: Api = {
     },
 
     async addVendorBooking(data) {
-        const result = await fetch(``, {
+        const result = await fetch(`${BASE_URL}/vendor_booking`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),

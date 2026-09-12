@@ -1,5 +1,6 @@
 package com.dashmonitor.dashmonitor.entities;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ public class VendorServices {
     public Long serviceId;
     public String name;   
     public String description;
-    public String basePrice;
+    public BigDecimal basePrice;
     public Instant createdAt;
     public Instant updatedAt;
 
@@ -34,10 +35,10 @@ public class VendorServices {
     public ServiceCategories serviceCategoryId; // smae with this one as well
 
     public VendorServices(){
-        this("", "", "", Instant.now(), Instant.now(), null, null);
+        this("", "", new BigDecimal("0.00"), Instant.now(), Instant.now(), null, null);
     }
 
-    public VendorServices(String name, String description, String basePrice, Instant createdAt, Instant updatedAt, Vendors vendorsId, ServiceCategories serviceCategoryId){
+    public VendorServices(String name, String description, BigDecimal basePrice, Instant createdAt, Instant updatedAt, Vendors vendorsId, ServiceCategories serviceCategoryId){
         this.name = name;
         this.description = description;
         this.basePrice = basePrice;
@@ -67,7 +68,7 @@ public class VendorServices {
         this.description = description;
     }
 
-    public void setBasePrice(String basePrice){
+    public void setBasePrice(BigDecimal basePrice){
         this.basePrice = basePrice;
     }
 
@@ -93,7 +94,7 @@ public class VendorServices {
         return this.description;
     }
 
-    public String getBasePrice(){
+    public BigDecimal getBasePrice(){
         return this.basePrice;
     }
 

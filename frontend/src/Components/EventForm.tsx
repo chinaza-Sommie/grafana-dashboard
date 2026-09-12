@@ -20,24 +20,55 @@ function EventForm({user}: EventFormProp) {
     const[startDateTime, setStartDateTime] = useState<string>('');
     const[endDateTime, setEndDateTime] = useState<string>('');
     const[venue, setVenue] = useState<string>('');
-    const[totalAmount, setTotalAmount] = useState<string>('');
+    const[totalAmount, setTotalAmount] = useState<number>(0);
     // const[customVenue, setCustomVenue] = useState<string>('');
     const [foodAndDrinks, setFoodAndDrinks] = useState<string>('');
     const [entertainment, setEntertainment] = useState<string>('');
     const[error, setError] = useState<string | null>(null);
-    const categories = ["venue", "food and drinks","entertainment"]
+    const categories = [venue, foodAndDrinks ,entertainment]
     // console.log(userId);
 
     if(user === null){
         return;
     }
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const getAllCategories = await api.getAllCategories();
+            // console.log(getAllCategories.length);
+        }
+
+        const fetchAllVendorServices = async () => {
+            const getAllVendorServices = await api.getAllVendorServices();
+            setAllVendorServices(getAllVendorServices);
+            return getAllVendorServices;
+        }
+        
+        fetchCategories();
+        fetchAllVendorServices();
+    }, [user]);
+
     const createEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setTotalAmount(0);
         if(!name.trim() || !eventType.trim() || !city.trim() || guestCount <= 0  ){
 
             return setError("All feilds are required. Please, try again.")
         }
-        setTotalAmount("0");
+
+        if(startDateTime && endDateTime){
+            const currentDate = new Date();
+            const start = new Date(startDateTime);
+            const end = new Date(endDateTime);
+
+            if(start <= currentDate){
+                return setError("Start date must be after today")
+            }
+
+            if(end <= start){
+                return setError("End date must be after the start date and time")
+            }
+        }
         // const userId = user;
         setError(null);
         const eventData = { name, eventType, city, guestCount, 
@@ -59,7 +90,13 @@ function EventForm({user}: EventFormProp) {
 
     }
 
-    const handlePlanEvent = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const findServiceById = (serviceId: string)=> {
+       const getService = allVendorServices.find(service => service.serviceId === Number(serviceId));
+       console.log(getService);
+       return getService;
+    }
+
+    const handlePlanEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
 
         e.preventDefault();
         if(!venue || !foodAndDrinks || !entertainment ){
@@ -67,20 +104,18 @@ function EventForm({user}: EventFormProp) {
             return setError("All fields are required. Please, try again.")
         }
 
-        if(startDateTime && endDateTime){
-            const currentDate = new Date();
-            const start = new Date(startDateTime);
-            const end = new Date(endDateTime);
-
-            if(start <= currentDate){
-                return setError("Start date must be after today")
-            }
-
-            if(end <= start){
-                return setError("End date must be after the start date and time")
-            }
+        if(!eventData){
+            return setError("Event has not been created yet");
         }
 
+        const agreedPrice = "40";
+        setError(null);
+
+        for(let i = 0; i < categories.length; i++){
+            const bookingData = { agreedPrice, bookingstatus: "pending", serviceId: findServiceById(categories[i]) , eventId: eventData}
+            await api.addVendorBooking(bookingData);
+            console.log("service created successfully");
+        }
 
     }
 
@@ -91,24 +126,23 @@ function EventForm({user}: EventFormProp) {
             return filterResult;
     }
     // console.log(filterServiceByCategory("venue"));
-
     useEffect(() => {
-        const fetchCategories = async () => {
-            const getAllCategories = await api.getAllCategories();
-            console.log(getAllCategories.length);
-        }
+        let count = 0;
 
-        const fetchAllVendorServices = async () => {
-            const getAllVendorServices = await api.getAllVendorServices();
-            setAllVendorServices(getAllVendorServices);
-            return getAllVendorServices;
+        for(let i = 0; i < categories.length; i++){
+            const service = findServiceById(categories[i]);
+
+            if(service){
+                count += service.basePrice;
+            }
         }
-        fetchCategories();
-        fetchAllVendorServices();
-    }, [user])
+        setTotalAmount(count);
+        
+    }, [venue, foodAndDrinks, entertainment, allVendorServices, categories])
     
     return (
         <div className='mx-[30%]'>
+            <p className='text-[14px] mb-4'> ← Back to Dashboard </p>
             <h4> {!eventFormComplete ? 'Create Event': 'Lets Plan Your Event'}</h4>
             
             {error && (
@@ -180,7 +214,7 @@ function EventForm({user}: EventFormProp) {
                             required={true}>
                             <option value="">Select Venue</option>
                             {filterServiceByCategory("venue").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId}>{service.name}</option>
+                                <option key={service.serviceId} value={service.serviceId} >{service.name} -  £{service.basePrice}</option>
                             ))
                             }
                         </select>
@@ -190,7 +224,7 @@ function EventForm({user}: EventFormProp) {
                             required={true}>
                             <option value="">Select food and Drinks</option>
                             {filterServiceByCategory("food and drinks").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId}>{service.name}</option>
+                                <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
                             ))
                             }
                         </select>
@@ -201,17 +235,23 @@ function EventForm({user}: EventFormProp) {
                             required={true}>
                             <option value="">Select food and Drinks</option>
                             {filterServiceByCategory("entertainment").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId}>{service.name}</option>
+                                <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
                             ))
                             }
                         </select>
 
-                        <div>
-
-                        </div>
+                        { venue && (
+                            
+                            <div className='flex justify-between border'>
+                                <div> Venue name</div>
+                                <div> vendor name</div>
+                                <div> price name</div>
+                            </div>
+                        )}
                         <div className='flex justify-end mb-5'>
-                            <b> Total: £500</b>
-                            {/* <b> Total: ${totalAmount}</b> */}
+                            { totalAmount && (
+                                <b> Total: {totalAmount} </b>
+                            )}
                         </div> 
 
                         <input type='submit' value={'Submit Planned Event'} name='Submit' className='rounded'/>
