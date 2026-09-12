@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.VendorBookings;
 import com.dashmonitor.dashmonitor.repositories.VendorBookingsRepository;
 
@@ -23,7 +24,12 @@ public class VendorBookingService {
         return vendorBookingsRepository.findById(id).get();
     }
 
-    public VendorBookings createVendorBooking(VendorBookings vendorBooking){
+    public VendorBookings createVendorBooking(VendorBookings vendorBooking) throws AppCustomExceptionHandler{
+        if(vendorBooking.getAgreedPrice() == null || vendorBooking.getAgreedPrice().isBlank() || vendorBooking.getBookingstatus() == null ||
+         vendorBooking.getBookingstatus().isBlank() || vendorBooking.getEventId() == null || vendorBooking.getServiceId() == null ){
+            throw new AppCustomExceptionHandler("these fields cannot be empty. Please try again");
+         }
+
         return vendorBookingsRepository.save(vendorBooking);
     }
 

@@ -8,7 +8,8 @@ import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
-import com.dashmonitor.dashmonitor.ExceptionHandler;
+import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
+// import com.dashmonitor.dashmonitor.ExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.repositories.UserRepository;
 
@@ -30,10 +31,10 @@ public class UserService {
         return userRepository.findById(id).get();
     }
 
-    public Users createUser(Users user){
+    public Users createUser(Users user) throws AppCustomExceptionHandler{
         // hash the password
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
-            throw new RuntimeException("User with this email already exists. Try again");
+            throw new AppCustomExceptionHandler("User with this email already exists. Try again");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -51,30 +52,23 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
+        
         userRepository.deleteById(id);
     }
 
-    public Users loginUser(String email, String password) throws ExceptionHandler {
+    public Users loginUser(String email, String password) throws AppCustomExceptionHandler {
         Optional<Users> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            throw new ExceptionHandler("user does not exist. Please check details and try again");
+            throw new AppCustomExceptionHandler("user does not exist. Please check details and try again");
         }
 
         Users currentUser = user.get();
-        // String currentPassword = passwordEncoder.encode(password);
-        // if(passwordEncoder.encode(password).equals(currentUser.password)){
-        //     throw new RuntimeException("passwords do not match");
-        // }
-        // System.out.println("password " + currentPassword);
-        // System.out.println("password " + currentUser.password);
-
         if(!passwordEncoder.matches(password, currentUser.password)){
-            throw new RuntimeException("passwords do not match");
+            throw new AppCustomExceptionHandler("passwords do not match");
         }
-        
-
+    
         return currentUser;
     }
 }

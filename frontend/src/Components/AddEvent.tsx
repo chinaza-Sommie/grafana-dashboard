@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import Navbar from '../Components/Navbar';
+import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import { api, type User, type VendorServices, type Event } from '../api';
 
 // Define a TypeScript interface for our API response
 interface EventFormProp {
   user: User | null;
+  onPageToggle: (setActivePage: string) => void;
 }
 
-function EventForm({user}: EventFormProp) {
+function EventEvent({user, onPageToggle}: EventFormProp) {
     const navigate = useNavigate();
     const[eventFormComplete, seteventFormComplete] = useState<boolean>(false);
     const[allVendorServices, setAllVendorServices] = useState<VendorServices[]>([]);
@@ -139,10 +140,12 @@ function EventForm({user}: EventFormProp) {
         setTotalAmount(count);
         
     }, [venue, foodAndDrinks, entertainment, allVendorServices, categories])
+
+
     
     return (
         <div className='mx-[30%]'>
-            <p className='text-[14px] mb-4'> ← Back to Dashboard </p>
+            <p className='text-[14px] mb-4' onClick={() => onPageToggle('events')}> ← Back to Dashboard </p>
             <h4> {!eventFormComplete ? 'Create Event': 'Lets Plan Your Event'}</h4>
             
             {error && (
@@ -249,7 +252,7 @@ function EventForm({user}: EventFormProp) {
                             </div>
                         )}
                         <div className='flex justify-end mb-5'>
-                            { totalAmount && (
+                            { totalAmount != 0 && (
                                 <b> Total: {totalAmount} </b>
                             )}
                         </div> 
@@ -262,5 +265,5 @@ function EventForm({user}: EventFormProp) {
     );
 }
 
-export default EventForm;
+export default EventEvent;
 

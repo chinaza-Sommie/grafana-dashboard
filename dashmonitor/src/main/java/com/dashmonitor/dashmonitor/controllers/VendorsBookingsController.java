@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.VendorBookings;
 import com.dashmonitor.dashmonitor.services.VendorBookingService;
 
@@ -39,7 +40,7 @@ public class VendorsBookingsController {
     }
 
     @PostMapping(value = "/api/vendor_booking", produces = "application/json")
-    public VendorBookings createVendorBookingById(@RequestBody VendorBookings vendorBooking){
+    public VendorBookings createVendorBookingById(@RequestBody VendorBookings vendorBooking) throws AppCustomExceptionHandler{
         return vendorBookingService.createVendorBooking(vendorBooking);
     }
 

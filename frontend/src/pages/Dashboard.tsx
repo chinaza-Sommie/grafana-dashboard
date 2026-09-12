@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
 // import Events from '../Components/EventsList';
-import EventForm from '../Components/EventForm';
+import EventForm from '../Components/AddEvent';
 import Profile from '../Components/Profile';
 import EventsList from '../Components/EventsList';
 import type { User } from '../api';
@@ -13,6 +13,7 @@ interface DashboardProp {
 }
 
 function Dashboard({loginUser} : DashboardProp) {
+    const[activePage, setActivePage] = useState('events');
     const navigate = useNavigate();
 
     if(loginUser?.userId === undefined ){
@@ -23,12 +24,20 @@ function Dashboard({loginUser} : DashboardProp) {
     console.log(loginUser);
     return (
         <div>
-            <Navbar />
+            <Navbar onPageToggle={setActivePage} loginUser={loginUser.firstName} />
 
             <div className=' pt-[5%] mx-[10%] px-5'>
-                {/* <EventsList user={loginUser} /> */}
-                <EventForm user={loginUser}/>
-                {/* <Profile loginUser={loginUser}/> */}
+                { activePage === 'events' && (
+                    <EventsList user={loginUser} onPageToggle={setActivePage} activePage={activePage} />
+                )}
+
+                { activePage === 'addEvent' && (
+                    <EventForm user={loginUser} onPageToggle={setActivePage} />
+                )}
+
+                {activePage === 'profile' && (
+                    <Profile loginUser={loginUser} onPageToggle={setActivePage} />
+                )}
             </div>
 
         </div>

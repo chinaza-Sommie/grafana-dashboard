@@ -15,24 +15,28 @@ function Login({loginUser, onSetLoginUser}: LoginUserProp) {
     const [error, setError] = useState<string | null>(null);
 
     const login = async (e: React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        try{
+            e.preventDefault();
 
-        if(email === null || email === "" || password === null || password === ""){
-            return setError("Please, enter correct details");
+            if(email === null || email === "" || password === null || password === ""){
+                return setError("Please, enter correct details");
+            }
+
+            // if(password.length < 6 ){
+            //     return setError("Password needs to be more than 6 characters. Please try again!");
+            // }
+
+            const data = { email, password};
+            const processLoginUserData = await api.loginUser(data);
+            if(!processLoginUserData){
+                setError("something went wrong. Try again");
+                return;
+            }
+            onSetLoginUser(processLoginUserData);
+            navigate('/dashboard');
+        }catch(e){
+            return setError("Something went wrong. Please try a again")
         }
-
-        // if(password.length < 6 ){
-        //     return setError("Password needs to be more than 6 characters. Please try again!");
-        // }
-
-        const data = { email, password};
-        const processLoginUserData = await api.loginUser(data);
-        if(!processLoginUserData){
-            setError("something went wrong. Try again");
-            return;
-        }
-        onSetLoginUser(processLoginUserData);
-        navigate('/dashboard');
         
     }
 

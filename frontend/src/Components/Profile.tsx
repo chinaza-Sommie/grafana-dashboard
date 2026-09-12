@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Events from './EventsList';
-import EventForm from '../Components/EventForm';
+import EventForm from './AddEvent';
 import type { User } from '../api';
 
 // Define a TypeScript interface for our API response
 interface ProfileProp {
   loginUser: User | null;
+  onPageToggle: (setActivePage: string) => void;
 }
 
-function Profile({loginUser}: ProfileProp) {
+function Profile({loginUser, onPageToggle}: ProfileProp) {
     
     return (
         <div className='mx-[30%]'>
-            <p className='text-[14px] mb-4'> ← Back </p>
+            <p className='text-[14px] mb-4' onClick={() => onPageToggle('addEvent')}> ← Back to Dashboard </p>
             <h4> Profile </h4>
 
             <div>

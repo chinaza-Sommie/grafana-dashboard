@@ -2,6 +2,7 @@ package com.dashmonitor.dashmonitor.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
 import com.dashmonitor.dashmonitor.entities.Events;
 import com.dashmonitor.dashmonitor.entities.Users;
 import com.dashmonitor.dashmonitor.services.EventsService;
@@ -43,12 +44,12 @@ public class EventsController {
     }
     
     @PostMapping(value = "/api/events", produces = "application/json")
-    public Events createEvent(@RequestBody Events event) {
+    public Events createEvent(@RequestBody Events event) throws AppCustomExceptionHandler{
         return eventsService.createEvents(event);
     }
     
     @PutMapping(value = "/api/events/{id}", produces = "application/json")
-    public Events updateEvent(@PathVariable Long id, @RequestBody Events event){
+    public Events updateEvent(@PathVariable Long id, @RequestBody Events event) throws AppCustomExceptionHandler{
         return eventsService.updateEvents(id, event);
     }
 
