@@ -1,7 +1,10 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.vendorServices;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+
+import com.dashmonitor.dashmonitor.serviceCategories.ServiceCategories;
+import com.dashmonitor.dashmonitor.vendors.Vendors;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

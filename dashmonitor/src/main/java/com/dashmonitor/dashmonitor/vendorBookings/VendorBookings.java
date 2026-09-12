@@ -1,6 +1,9 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.vendorBookings;
 
 import java.time.Instant;
+
+import com.dashmonitor.dashmonitor.events.Events;
+import com.dashmonitor.dashmonitor.vendorServices.VendorServices;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

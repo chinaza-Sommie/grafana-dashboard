@@ -1,6 +1,8 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.events;
 
 import java.time.Instant;
+
+import com.dashmonitor.dashmonitor.users.Users;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

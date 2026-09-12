@@ -1,12 +1,8 @@
-package com.dashmonitor.dashmonitor.controllers;
+package com.dashmonitor.dashmonitor.serviceCategories;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
-
-import com.dashmonitor.dashmonitor.entities.ServiceCategories;
-import com.dashmonitor.dashmonitor.services.ServiceCategoriesService;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

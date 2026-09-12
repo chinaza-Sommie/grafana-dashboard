@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.services;
+package com.dashmonitor.dashmonitor.events;
 
 import java.util.List;
 
@@ -6,9 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.Events;
-import com.dashmonitor.dashmonitor.entities.Users;
-import com.dashmonitor.dashmonitor.repositories.EventsRepository;
+import com.dashmonitor.dashmonitor.users.Users;
+
 import org.apache.commons.lang3.StringUtils;
 
 @Service
@@ -36,7 +35,7 @@ public class EventsService {
         if(StringUtils.isNumeric(events.getName()) || StringUtils.isNumeric(events.getEventType())){
             throw new AppCustomExceptionHandler("Please, Name cannot be only numbers. Try again");
         }
-        
+
         return eventsRepository.save(events);
     }
 

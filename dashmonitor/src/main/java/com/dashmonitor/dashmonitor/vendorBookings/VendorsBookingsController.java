@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.controllers;
+package com.dashmonitor.dashmonitor.vendorBookings;
 
 import java.util.List;
 
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.VendorBookings;
-import com.dashmonitor.dashmonitor.services.VendorBookingService;
 
 
 @RestController

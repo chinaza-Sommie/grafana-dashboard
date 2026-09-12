@@ -1,11 +1,8 @@
-package com.dashmonitor.dashmonitor.services;
+package com.dashmonitor.dashmonitor.serviceCategories;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
-import com.dashmonitor.dashmonitor.entities.ServiceCategories;
-import com.dashmonitor.dashmonitor.repositories.ServiceCategoriesRepository;
 
 @Service
 public class ServiceCategoriesService {

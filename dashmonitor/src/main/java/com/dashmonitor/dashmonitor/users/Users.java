@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.users;
 
 import java.time.Instant;
 import java.util.List;

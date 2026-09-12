@@ -24,7 +24,7 @@ function Dashboard({loginUser} : DashboardProp) {
     
     return (
         <div>
-            <Navbar onPageToggle={setActivePage} loginUser={loginUser.firstName} />
+            <Navbar onPageToggle={setActivePage} loginUser={loginUser.firstName} onSetEventToEdit={setEventToEdit} />
 
             <div className=' pt-[5%] mx-[10%] px-5'>
                 { activePage === 'events' && (
@@ -37,7 +37,7 @@ function Dashboard({loginUser} : DashboardProp) {
                 )}
 
                 {activePage === 'profile' && (
-                    <Profile loginUser={loginUser} onPageToggle={setActivePage}  />
+                    <Profile loginUser={loginUser} onPageToggle={setActivePage}   />
                 )}
             </div>
 

@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.serviceCategories;
 
 import java.time.Instant;
 

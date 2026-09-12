@@ -1,10 +1,7 @@
-package com.dashmonitor.dashmonitor.services;
+package com.dashmonitor.dashmonitor.vendorServices;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
-import com.dashmonitor.dashmonitor.entities.VendorServices;
-import com.dashmonitor.dashmonitor.repositories.VendorServicesRepository;
 
 @Service
 public class VendorServicesService {

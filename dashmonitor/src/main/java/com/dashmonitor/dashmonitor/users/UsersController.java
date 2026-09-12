@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.controllers;
+package com.dashmonitor.dashmonitor.users;
 
 import java.util.List;
 
@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-// import com.dashmonitor.dashmonitor.ExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.Users;
-import com.dashmonitor.dashmonitor.services.UserService;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

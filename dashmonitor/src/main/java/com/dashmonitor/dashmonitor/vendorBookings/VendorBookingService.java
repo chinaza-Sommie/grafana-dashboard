@@ -1,12 +1,10 @@
-package com.dashmonitor.dashmonitor.services;
+package com.dashmonitor.dashmonitor.vendorBookings;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.VendorBookings;
-import com.dashmonitor.dashmonitor.repositories.VendorBookingsRepository;
 
 @Service
 public class VendorBookingService {

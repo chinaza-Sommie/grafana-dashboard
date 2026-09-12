@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.entities;
+package com.dashmonitor.dashmonitor.vendors;
 
 import java.time.Instant;
 

@@ -1,8 +1,7 @@
-package com.dashmonitor.dashmonitor.repositories;
+package com.dashmonitor.dashmonitor.users;
 
 import org.springframework.data.repository.ListCrudRepository;
 
-import com.dashmonitor.dashmonitor.entities.Users;
 import java.util.List;
 import java.util.Optional;
 

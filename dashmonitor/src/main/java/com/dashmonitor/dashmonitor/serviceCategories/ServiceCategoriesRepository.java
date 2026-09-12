@@ -1,8 +1,6 @@
-package com.dashmonitor.dashmonitor.repositories;
+package com.dashmonitor.dashmonitor.serviceCategories;
 
 import org.springframework.data.repository.ListCrudRepository;
-
-import com.dashmonitor.dashmonitor.entities.ServiceCategories;
 
 public interface ServiceCategoriesRepository extends ListCrudRepository<ServiceCategories, Long>{
     

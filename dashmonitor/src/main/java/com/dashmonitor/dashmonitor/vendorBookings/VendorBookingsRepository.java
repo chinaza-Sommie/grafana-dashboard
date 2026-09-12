@@ -1,8 +1,6 @@
-package com.dashmonitor.dashmonitor.repositories;
+package com.dashmonitor.dashmonitor.vendorBookings;
 
 import org.springframework.data.repository.ListCrudRepository;
-
-import com.dashmonitor.dashmonitor.entities.VendorBookings;
 
 public interface VendorBookingsRepository extends ListCrudRepository<VendorBookings, Long> {
     

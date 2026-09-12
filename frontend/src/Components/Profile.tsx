@@ -14,7 +14,7 @@ function Profile({loginUser, onPageToggle}: ProfileProp) {
     
     return (
         <div className='mx-[30%]'>
-            <p className='text-[14px] mb-4' onClick={() => onPageToggle('addEvent')}> ← Back to Dashboard </p>
+            <p className='text-[14px] mb-4' onClick={() =>onPageToggle('events')}> ← Back to Dashboard </p>
             <h4> Profile </h4>
 
             <div>

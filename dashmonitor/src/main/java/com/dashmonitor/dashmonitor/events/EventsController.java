@@ -1,11 +1,9 @@
-package com.dashmonitor.dashmonitor.controllers;
+package com.dashmonitor.dashmonitor.events;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.Events;
-import com.dashmonitor.dashmonitor.entities.Users;
-import com.dashmonitor.dashmonitor.services.EventsService;
+import com.dashmonitor.dashmonitor.users.Users;
 
 import java.util.List;
 

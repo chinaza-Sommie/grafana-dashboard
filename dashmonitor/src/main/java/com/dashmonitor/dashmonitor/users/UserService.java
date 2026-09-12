@@ -1,4 +1,4 @@
-package com.dashmonitor.dashmonitor.services;
+package com.dashmonitor.dashmonitor.users;
 
 import java.util.List;
 
@@ -9,9 +9,6 @@ import java.util.Optional;
 import javax.management.RuntimeErrorException;
 
 import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
-// import com.dashmonitor.dashmonitor.ExceptionHandler;
-import com.dashmonitor.dashmonitor.entities.Users;
-import com.dashmonitor.dashmonitor.repositories.UserRepository;
 
 @Service
 public class UserService {
