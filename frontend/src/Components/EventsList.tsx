@@ -8,9 +8,10 @@ interface EventListProp {
     // activePage: string;
     onPageToggle: (activePage: string)=> void;
     onSetEventToEdit: (eventToEdit: Event) => void;
+    onSetEventToView: (eventToView: Event) => void;
 }
 
-function EventsList({user, onPageToggle, onSetEventToEdit}: EventListProp) {
+function EventsList({user, onPageToggle, onSetEventToEdit, onSetEventToView}: EventListProp) {
     const[usersEvents, setUsersEvents] = useState<Event[]>([]);
     
     // if(!usersEvents){
@@ -23,7 +24,11 @@ function EventsList({user, onPageToggle, onSetEventToEdit}: EventListProp) {
 
     const handleUpdateEvents = async (event: Event) => {
         onSetEventToEdit(event);
-        onPageToggle('addEvent');
+    }
+
+     const handleViewEvent = async (event: Event) => {
+        onSetEventToView(event);
+        onPageToggle('viewEvent');
     }
 
     useEffect(() => {
@@ -48,13 +53,13 @@ function EventsList({user, onPageToggle, onSetEventToEdit}: EventListProp) {
             : 
                 <>
                     <div className='flex justify-end'>
-                        <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
+                        <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Adds Event </button>
                     </div>
 
                     <div className='grid grid-cols-4 gap-8'>
                         {
                             usersEvents.map((event) => (
-                                <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} onHandleUpdate={handleUpdateEvents} />
+                                <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} onHandleUpdate={handleUpdateEvents} onPageToggle={onPageToggle} onhandleViewEvent={handleViewEvent }/>
                             ))
                         }
                         

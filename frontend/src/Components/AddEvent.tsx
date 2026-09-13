@@ -39,8 +39,6 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
             if(eventToEdit == null){
                 return;
             }
-
-            console.log(eventToEdit);
             setname(eventToEdit.name);
             seteventType(eventToEdit.eventType);
             setGuestCount(eventToEdit.guestCount);
