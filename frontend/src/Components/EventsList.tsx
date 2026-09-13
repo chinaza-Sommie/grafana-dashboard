@@ -41,17 +41,27 @@ function EventsList({user, onPageToggle, activePage, onSetEventToEdit}: EventLis
 
     return (
         <>
-            <div className='flex justify-end'>
-                <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
-            </div>
-            <div className='grid grid-cols-4 gap-8'>
-                {
-                    usersEvents.map((event) => (
-                        <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} onHandleUpdate={handleUpdateEvents} />
-                    ))
-                }
-                
-            </div>
+            {usersEvents.length <= 0 ?
+                < div className='text-center w-[100%] pt-[8%]' >
+                    <div className='mb-5 text-[18px]'> No events available yet</div>
+                    <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
+                </div>
+            : 
+                <>
+                    <div className='flex justify-end'>
+                        <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
+                    </div>
+
+                    <div className='grid grid-cols-4 gap-8'>
+                        {
+                            usersEvents.map((event) => (
+                                <EventCard key={event.eventId} eventData={event} onDelete={handleDelete} onHandleUpdate={handleUpdateEvents} />
+                            ))
+                        }
+                        
+                    </div>
+                </>
+            }
         </>
     );
 }

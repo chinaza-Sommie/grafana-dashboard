@@ -3,11 +3,11 @@ import { api, type User,} from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-interface RegisterProp {
- onSetUser: (user: User) => void;
-}
+// interface RegisterProp {
+//  onSetUser: (user: User) => void;
+// }
 
-function Register({onSetUser}: RegisterProp) {
+function Register() {
     const navigate = useNavigate();
     const[firstName, setfirstName] = useState<string>('');
     const[lastName, setlastName] = useState<string>('');
@@ -31,9 +31,9 @@ function Register({onSetUser}: RegisterProp) {
 
         try{
             const userDetails = { firstName, lastName, email, password}
-            const addUser = await api.addUser(userDetails);
-            onSetUser(addUser);
-            navigate('/login');
+            await api.addUser(userDetails);
+            // onSetUser(addUser);
+            navigate('/');
         }catch(err){
             //Add a specific error here
             // if(err instanceof Error){

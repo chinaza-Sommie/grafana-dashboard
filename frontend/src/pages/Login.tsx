@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { api, type User } from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Define a TypeScript interface for our API response
 interface LoginUserProp {
-  loginUser: User | null;
+//   loginUser: User | null;
   onSetLoginUser: (loginUser: User) => void;
 }
 
-function Login({loginUser, onSetLoginUser}: LoginUserProp) {
+function Login({onSetLoginUser}: LoginUserProp) {
     const navigate = useNavigate()
     const[email,setEmail] = useState<string>('');
     const[password,setPasword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+
+    
 
     const login = async (e: React.SubmitEvent<HTMLFormElement>) => {
         try{
@@ -34,6 +36,7 @@ function Login({loginUser, onSetLoginUser}: LoginUserProp) {
             }
             onSetLoginUser(processLoginUserData);
             navigate('/dashboard');
+
         }catch(e){
             return setError("Something went wrong. Please try a again")
         }

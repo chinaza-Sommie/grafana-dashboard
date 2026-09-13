@@ -3,6 +3,9 @@ package com.dashmonitor.dashmonitor.serviceCategories;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dashmonitor.dashmonitor.AppCustomExceptionHandler;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,13 +37,13 @@ public class ServiceCategoriesController {
     }
 
     @PostMapping(value="/api/service_categories", produces = "application/json")
-    public ServiceCategories createServiceCategories(@RequestBody ServiceCategories serviceCategories) {
+    public ServiceCategories createServiceCategories(@RequestBody ServiceCategories serviceCategories) throws AppCustomExceptionHandler {
         
         return serviceCategoriesService.createServiceCategories(serviceCategories);
     }
     
     @PutMapping(value="/api/service_categories/{id}", produces = "application/json")
-    public ServiceCategories updateServiceCategoriesById(@PathVariable Long id, @RequestBody ServiceCategories serviceCategories) {
+    public ServiceCategories updateServiceCategoriesById(@PathVariable Long id, @RequestBody ServiceCategories serviceCategories) throws AppCustomExceptionHandler {
        return serviceCategoriesService.updateServiceCategories(id, serviceCategories);
     }
 
