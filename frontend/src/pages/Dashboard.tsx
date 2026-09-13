@@ -3,16 +3,15 @@ import Navbar from '../Components/Navbar';
 import AddEvent from '../Components/AddEvent';
 import Profile from '../Components/Profile';
 import EventsList from '../Components/EventsList';
-import { api, type Event, type User } from '../api';
+import { type Event, type User } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 // Define a TypeScript interface for our API response
 interface DashboardProp {
   loginUser: User | null;
-  onSetLoginUser: (loginUser: User | null) => void;
 }
 
-function Dashboard({loginUser, onSetLoginUser} : DashboardProp) {
+function Dashboard({loginUser} : DashboardProp) {
     const navigate = useNavigate();
     const[activePage, setActivePage] = useState('events');
     const[eventToEdit, setEventToEdit] = useState<Event | null>(null);
@@ -42,7 +41,7 @@ function Dashboard({loginUser, onSetLoginUser} : DashboardProp) {
 
             <div className=' pt-[5%] mx-[10%] px-5'>
                 { activePage === 'events' && (
-                    <EventsList user={loginUser} onPageToggle={setActivePage} activePage={activePage} onSetEventToEdit={setEventToEdit}
+                    <EventsList user={loginUser} onPageToggle={setActivePage} onSetEventToEdit={setEventToEdit}
                      />
                 )}
 

@@ -4,16 +4,59 @@
 # See the "Part 2: Containerise the stack" section of README.md for the full
 # list of requirements. Uncomment the keys below and fill them in.
 #
-# services:
-#   db:
-#     # TODO: MySQL 8, credentials from .env, healthcheck, named volume
-#   api:
-#     # TODO: build ./api, wait for db to be healthy, SPRING_DATASOURCE_* env vars
-#   frontend:
+services:
+#   # TODO: MySQL 8, credentials from .env, healthcheck, named volume
+  db:
+    image: mysql:8.4
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    environment:
+      MYSQL_DATABASE: eventPlanner
+      MYSQL_USER: newuser
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: [PUT YOUR PASSWORD ROOT HERE]
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+
+    networks:
+      - app-network
+
+
+  api:
+    build: ./dashmonitor
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/eventPlanner
+      SPRING_DATASOURCE_USERNAME: newuser
+      SPRING_DATASOURCE_PASSWORD: secret
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+#    
+  frontend:
 #     # TODO: build ./frontend, VITE_API_PROXY_TARGET pointing at the api service
+    image: nginx:alpine
+    ports:
+      - "8081:5173"
+    volumes:
+      - "./frontend:/usr/share/nginx/html:ro"
+    networks:
+      - app-network
+
+# # TODO: the named volume that persists the MySQL data
+volumes:
+  db-data:
 #
-# volumes:
-#   # TODO: the named volume that persists the MySQL data
-#
-# networks:
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
 #   # TODO: the isolated network the services communicate over
+

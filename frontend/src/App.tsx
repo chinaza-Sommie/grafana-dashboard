@@ -28,7 +28,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Login onSetLoginUser={setLoginUser} />} />
       <Route path='/register' element={<Register />}  />
-      <Route path='/dashboard' element={<Dashboard loginUser={loginUser} onSetLoginUser={setLoginUser} />} />
+      <Route path='/dashboard' element={<Dashboard loginUser={loginUser} />} />
     </Routes>
   );
 }

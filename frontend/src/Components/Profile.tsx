@@ -1,7 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import Navbar from '../Components/Navbar';
-// import Events from './EventsList';
-// import EventForm from './AddEvent';
 import ProfileImg from '../assets/user_profile_img.png';
 import type { User } from '../api';
 

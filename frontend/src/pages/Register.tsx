@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { api, type User,} from '../api';
+import { useState } from 'react';
+import { api} from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 
 
