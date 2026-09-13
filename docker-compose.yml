@@ -17,7 +17,7 @@ services:
       MYSQL_DATABASE: eventPlanner
       MYSQL_USER: newuser
       MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: [PUT YOUR PASSWORD ROOT HERE]
+      MYSQL_ROOT_PASSWORD: "put your password here"
     volumes:
       - db-data:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d

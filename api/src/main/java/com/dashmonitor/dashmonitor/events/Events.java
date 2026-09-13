@@ -1,18 +1,26 @@
 package com.dashmonitor.dashmonitor.events;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dashmonitor.dashmonitor.users.Users;
+import com.dashmonitor.dashmonitor.vendorBookings.VendorBookings;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "events")
@@ -35,6 +43,8 @@ public class Events {
     @JoinColumn(name = "user_id")
     public Users user;
 
+    // @OneToMany(mappedBy = "eventId",cascade = CascadeType.ALL,orphanRemoval = true) 
+    // public List<VendorBookings> vendorBookings;
     
 
     public Events(){
