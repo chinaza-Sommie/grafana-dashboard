@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { api, type User, type VendorServices, type Event } from '../api';
+import { api, type User, type Event } from '../api';
+import EventServicesForm from './EventServicesForm';
+import EventDetailsForm from './EventDetailsForm';
 
 // Define a TypeScript interface for our API response
 interface EventFormProp {
@@ -12,8 +14,9 @@ interface EventFormProp {
 function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventFormProp) {
     
     const[eventFormComplete, seteventFormComplete] = useState<boolean>(false);
-    const[allVendorServices, setAllVendorServices] = useState<VendorServices[]>([]);
+
     const[eventData, setEventData] = useState<Event | null>(null);
+    
     const[name, setname] = useState<string>('');
     const[eventType, seteventType] = useState<string>('');
     const[city, setCity] = useState<string>('');
@@ -21,13 +24,10 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
     const[status, setStatus] = useState<string>('pending')
     const[startDateTime, setStartDateTime] = useState<string>('');
     const[endDateTime, setEndDateTime] = useState<string>('');
-    const[venue, setVenue] = useState<string>('');
+
     const[totalAmount, setTotalAmount] = useState<number>(0);
-    // const[customVenue, setCustomVenue] = useState<string>('');
-    const [foodAndDrinks, setFoodAndDrinks] = useState<string>('');
-    const [entertainment, setEntertainment] = useState<string>('');
+    
     const[error, setError] = useState<string | null>(null);
-    const categories = [venue, foodAndDrinks ,entertainment]
     // console.log(userId);
 
     if(user === null){
@@ -35,16 +35,6 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
     }
 
     useEffect(() => {
-        // const fetchCategories = async () => {
-        //     const getAllCategories = await api.getAllCategories();
-        //     // console.log(getAllCategories.length);
-        // }
-
-        const fetchAllVendorServices = async () => {
-            const getAllVendorServices = await api.getAllVendorServices();
-            setAllVendorServices(getAllVendorServices);
-            return getAllVendorServices;
-        }
         const getEventToUpdate = () => {
             if(eventToEdit == null){
                 return;
@@ -58,11 +48,8 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
             setStartDateTime(eventToEdit.startDateTime.slice(0, 16));
             setEndDateTime(eventToEdit.endDateTime.slice(0, 16));
             console.log(eventToEdit.name);
-        }
-        
+        }     
         getEventToUpdate();
-        // fetchCategories();
-        fetchAllVendorServices();
     }, [user]);
 
     const createEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -86,7 +73,7 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
                 return setError("End date must be after the start date and time")
             }
         }
-        // const userId = user;
+    
         setError(null);
         const eventData = { name, eventType, city, guestCount, 
             startDateTime: new Date(startDateTime).toISOString(),
@@ -105,60 +92,7 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
         setEventData(createEventData);
 
     }
-
-    const findServiceById = (serviceId: string)=> {
-       const getService = allVendorServices.find(service => service.serviceId === Number(serviceId));
-       return getService;
-    }
-
-    const handlePlanEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
-
-        e.preventDefault();
-        if(!venue || !foodAndDrinks || !entertainment ){
-
-            return setError("All fields are required. Please, try again.")
-        }
-
-        if(!eventData){
-            return setError("Event has not been created yet");
-        }
-
-        const agreedPrice = "40";
-        setError(null);
-
-        for(let i = 0; i < categories.length; i++){
-            const bookingData = { agreedPrice, bookingstatus: "pending", serviceId: findServiceById(categories[i]) , eventId: eventData}
-            await api.addVendorBooking(bookingData);
-            
-        }
-        console.log("service created successfully");
-        seteventFormComplete(false);
-        setError("booking created successfully");
-        onPageToggle('events');
-
-    }
-
-    const filterServiceByCategory = (category: string) => {
-        const filterResult = allVendorServices.filter(service => 
-            service.serviceCategoryId.categoryName.toLocaleLowerCase() === category.toLocaleLowerCase() );
-        
-            return filterResult;
-    }
-    // console.log(filterServiceByCategory("venue"));
-    useEffect(() => {
-        let count = 0;
-
-        for(let i = 0; i < categories.length; i++){
-            const service = findServiceById(categories[i]);
-
-            if(service){
-                count += service.basePrice;
-            }
-        }
-        setTotalAmount(count);
-        
-    }, [venue, foodAndDrinks, entertainment, allVendorServices, categories])
-
+    
     const handleUpdateEvent = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(eventToEdit === null){
@@ -191,109 +125,17 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
 
                 {
                     !eventFormComplete && (
-                        <form className='' onSubmit={eventToEdit === null ? createEvent : handleUpdateEvent}>
-                            <input type='text' placeholder='Enter Event Name'
-                            className='rounded'
-                            value={name}
-                            onChange={(e) => setname(e.target.value)}/>
-
-                            <input type='text' placeholder='Enter eventType'
-                            className='rounded'
-                            value={eventType}
-                            onChange={(e) => seteventType(e.target.value)}/>
-
-                            {/* use below to search by location */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <input type='text'
-                                placeholder='Enter Event City'
-                                className='rounded'
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}/>
-
-                                <input type='number'
-                                placeholder='Enter Guest Count'
-                                className='rounded'
-                                value={guestCount}
-                                onChange={(e) => setGuestCount(Number(e.target.value))} />
-                            </div>
-                            <div className="grid grid-cols-2 gap-3 my-5">
-                                <div>
-                                    <label className="block mb-2">Start Date & Time</label>
-                                    <input
-                                    type="datetime-local"
-                                    name="startDateTime"
-                                        className="w-full p-3 border border-black rounded"
-                                        value={startDateTime}
-                                        onChange={(e) => setStartDateTime(e.target.value)}
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block mb-2">End Date & Time</label>
-                                    <input
-                                        type="datetime-local"
-                                        name="endDateTime"
-                                        className="w-full p-3 border border-black rounded"
-                                        value={endDateTime}
-                                        onChange={(e) => setEndDateTime(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            
-                            {/* <input type='submit' value={'Create Event'} name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
-                    transition delay-150 duration-300 ease-in-out'/> */}
-                            <button type='submit' value={'Create Event'}  name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
-                    transition delay-150 duration-300 ease-in-out' > Create Event </button>
-                        </form>
-
+                        
+                        <EventDetailsForm onCreatEvent={createEvent} eventToEdit={eventToEdit} onHandleUpdateEvent={handleUpdateEvent}
+                        name={name} onSetname={setname} city={city} onSetCity={setCity} eventType={eventType} onSeteventType={seteventType} guestCount={guestCount} onSetGuestCount={setGuestCount}
+                        startDateTime={startDateTime} onSetStartDateTime={setStartDateTime} endDateTime={endDateTime} onSetEndDateTime={setEndDateTime}  />
                     )
                 }
 
                 {
                     eventFormComplete && (
-                        <form onSubmit={handlePlanEvent}>
-                            <select
-                                value={venue}
-                                onChange={(e) => setVenue(e.target.value)}
-                                required={true}>
-                                <option value="">Select Venue</option>
-                                {filterServiceByCategory("venue").map((service) => (
-                                    <option key={service.serviceId} value={service.serviceId} >{service.name} -  £{service.basePrice}</option>
-                                ))
-                                }
-                            </select>
-                            <select
-                                value={foodAndDrinks}
-                                onChange={(e) =>setFoodAndDrinks(e.target.value)}
-                                required={true}>
-                                <option value="">Select food and Drinks</option>
-                                {filterServiceByCategory("food and drinks").map((service) => (
-                                    <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
-                                ))
-                                }
-                            </select>
-
-                            <select
-                                value={entertainment}
-                                onChange={(e) => setEntertainment(e.target.value)}
-                                required={true}>
-                                <option value="">Select food and Drinks</option>
-                                {filterServiceByCategory("entertainment").map((service) => (
-                                    <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
-                                ))
-                                }
-                            </select>
-
-                            <div className='flex justify-end mb-5 text-[20px]'>
-                                { totalAmount != 0 && (
-                                    <b> Total: {totalAmount.toLocaleString()} </b>
-                                )}
-                            </div> 
-
-                            {/* <input type='submit' value={'Submit Planned Event'} name='Submit' className='rounded'/> */}
-                            <button type='submit' value={'Submit Planned Event'}  name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
-                    transition delay-150 duration-300 ease-in-out' > Submit Planned Event </button>
-                        </form>
+                        <EventServicesForm onSetError={setError} onPageToggle={onPageToggle} onSetTotalAmount={setTotalAmount} onSetEventForm={seteventFormComplete}
+                        eventData={eventData} totalAmount={totalAmount}  />
                     )
                 }
             </div>
