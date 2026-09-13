@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+body{
+  /* background-color: #BBC5B4; */
+}
+
 h1 {
   font-size: 46px;
   letter-spacing: -1.68px;
@@ -34,25 +38,32 @@ form{
 }
 
 form input,
-form select{
+form select,
+form button{
   margin-bottom: 10px;
   padding: 10px 20px;
   outline: 0;
-  border: 0;
-  border: 1px solid black;
+  /* border: 0; */
+  color: white;
+  border: 1px solid white;
 }
-
+form input{
+  /* border: 1px  */
+}
+form button{
+  border: 1px solid #29A699 !important;
+}
 form select{
   padding: 20px;
 }
 button{
-  background-color: black;
-  color: white;
+  /* background-color: #29A699; */
+  /* color: white; */
   padding: 5px 20px;
   text-align: center;
 }
 
 form input:focus,
 form select:focus {
-  border-color: #555;
+  border-color: #29A699;
 }
