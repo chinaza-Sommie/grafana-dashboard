@@ -31,14 +31,38 @@ Due to the time limitation for the app, the following features are out of scope;
 - 
 
 ## How To Setup
--
+-Prerequisites
+Before starting the application, make sure you have installed:
+Node.js (LTS recommended)
+npm
+Check that Node.js and npm are installed:
+node --version
+npm --version
+Installation
+1. Clone the repository
+git clone <YOUR_REPOSITORY_URL>
+Move into the project directory:
+cd <PROJECT_FOLDER>
+2. Install dependencies
+Run:
+npm install
+This installs all dependencies defined in package.json.
+
+## Also ensure you have docker installed
+
+
 -
 
 ## Challenges and Outcomes
 These are the following challenges I encountered:
+- I faced some challenges with 
+
 - 
 
 ## If I Had More Time
 
-
-## Video Demo
+- Implemented login with OAUTH and JWT
+- Implement a vendor management 
+-allows vendors to signup
+- allow users to update their booking services from vendors
+- 
