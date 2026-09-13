@@ -4,7 +4,7 @@
 # See the "Part 2: Containerise the stack" section of README.md for the full
 # list of requirements. Uncomment the keys below and fill them in.
 #
-# services:
+services:
 #   db:
 #     # TODO: MySQL 8, credentials from .env, healthcheck, named volume
 #   api:
