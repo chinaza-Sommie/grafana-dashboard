@@ -49,13 +49,16 @@ npm install
 This installs all dependencies defined in package.json.
 
 ## Also ensure you have docker installed
+- cd into the frontend folder nd type: docker compose up
 
-
--
+- Open another terminal and cd to the project root directory and type [ docker compose up ] to start the docker service
+- You can then access the pages in the links provided by docker
 
 ## Challenges and Outcomes
 These are the following challenges I encountered:
-- I faced some challenges with 
+- I faced some challenges with Persistent data but to solve it I used local storage.
+- I also faced some issues with setting up sql filethe docker compose file but to resolve this I had to rename my files so that docker compose would have an order to which it read the files
+- and many other challenges I encountered..
 
 - 
 
