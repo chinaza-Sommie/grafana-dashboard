@@ -86,8 +86,8 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
             // console.log("something went wrong");
             return;
         }
-        seteventFormComplete(true);
         setEventData(createEventData);
+        onPageToggle('events');
 
     }
     
@@ -111,7 +111,7 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
     }
     
     return (
-        <div className='mx-[15%] lg:mx-[30%]'>
+        <div className='mx-[15%] lg:mx-[20%]'>
             <p className=' mb-4 px-5 text-[#29A699] font-bold hover:cursor-pointer hover:underline' onClick={() => {onPageToggle('events') ; onSetEventToEdit(null)}}> ← Back to Dashboard </p>
             
             <div className='bg-[#042642] text-white py-[60px] px-[50px] bg-[#042642] rounded-lg shadow-xl/30 lg:px-[40px]'> 

@@ -43,9 +43,8 @@ public class Events {
     @JoinColumn(name = "user_id")
     public Users user;
 
-    // @OneToMany(mappedBy = "eventId",cascade = CascadeType.ALL,orphanRemoval = true)  
-    // @JsonManagedReference 
-    // public List<VendorBookings> vendorBookings = new ArrayList<>();;
+    // @OneToMany(mappedBy = "eventId",cascade = CascadeType.ALL,orphanRemoval = true) 
+    // public List<VendorBookings> vendorBookings;
     
 
     public Events(){
