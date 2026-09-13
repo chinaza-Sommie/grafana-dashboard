@@ -16,7 +16,7 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vendorBookings")
+@Table(name = "vendor_bookings")
 public class VendorBookings {
     
     @Id
