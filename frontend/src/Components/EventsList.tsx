@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
 import EventCard from './EventCard';
 import { api, type Event, type User } from '../api';
 
 // Define a TypeScript interface for our API response
 interface EventListProp {
     user: User;
-    activePage: string;
+    // activePage: string;
     onPageToggle: (activePage: string)=> void;
     onSetEventToEdit: (eventToEdit: Event) => void;
 }
 
-function EventsList({user, onPageToggle, activePage, onSetEventToEdit}: EventListProp) {
+function EventsList({user, onPageToggle, onSetEventToEdit}: EventListProp) {
     const[usersEvents, setUsersEvents] = useState<Event[]>([]);
     
     // if(!usersEvents){

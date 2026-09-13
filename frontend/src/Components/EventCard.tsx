@@ -1,7 +1,5 @@
 import type { Event } from "../api";
 
-
-// Define a TypeScript interface for our API response
 interface EachEvent {
   eventData: Event;
   onHandleUpdate: (event: Event)=> void;

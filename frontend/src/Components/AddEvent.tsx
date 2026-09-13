@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import { useNavigate } from 'react-router-dom';
 import { api, type User, type VendorServices, type Event } from '../api';
 
 // Define a TypeScript interface for our API response
@@ -12,7 +10,7 @@ interface EventFormProp {
 }
 
 function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventFormProp) {
-    const navigate = useNavigate();
+    
     const[eventFormComplete, seteventFormComplete] = useState<boolean>(false);
     const[allVendorServices, setAllVendorServices] = useState<VendorServices[]>([]);
     const[eventData, setEventData] = useState<Event | null>(null);
@@ -37,10 +35,10 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
     }
 
     useEffect(() => {
-        const fetchCategories = async () => {
-            const getAllCategories = await api.getAllCategories();
-            // console.log(getAllCategories.length);
-        }
+        // const fetchCategories = async () => {
+        //     const getAllCategories = await api.getAllCategories();
+        //     // console.log(getAllCategories.length);
+        // }
 
         const fetchAllVendorServices = async () => {
             const getAllVendorServices = await api.getAllVendorServices();
@@ -63,7 +61,7 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
         }
         
         getEventToUpdate();
-        fetchCategories();
+        // fetchCategories();
         fetchAllVendorServices();
     }, [user]);
 
