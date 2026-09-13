@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, type User,} from '../api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface RegisterProp {
@@ -22,7 +22,7 @@ function Register({onSetUser}: RegisterProp) {
         if(firstName === null || lastName === null || email === null || password === null || confirmPassword === null ||
             firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === ""
         ){
-            return setError("Please, enter the correct details");
+            return setError("Fields cannot be empty. Please, try again.");
         }
 
         if(password != confirmPassword){
@@ -47,20 +47,23 @@ function Register({onSetUser}: RegisterProp) {
     return (
         <div>
             <div className='flex justify-center signin-reg-button mt-[10%] text-center'>
-                <div className='w-[30%] p-5 ' style={{border: "1px solid red"}}>
-                    <h1> Register</h1>
-                    <h4> Fill the form below</h4>
+                
+                <div className='w-[35%] py-[60px] px-[50px] bg-[#042642] rounded-lg shadow-xl/30 lg:w-[28%] lg:px-[40px] '>
+                    <h1 className='text-white'> Register</h1>
+                    <h4 className='text-[#29A699]'> Fill the form below</h4>
                     {error && (
-                        <p className='text-[red] mb-5'>{error}</p>
+                        <p className='text-[red] bg-[#ffa2a2] border border-2 border-[red] mb-5 py-3 rounded-lg'>{error}</p>
                     )}
                     <form onSubmit={register}>
-                        <input type='firstName' placeholder='Enter Your firstName' value={firstName} onChange={(e)=> setfirstName(e.target.value) }/>
-                        <input type='lastName' placeholder='Enter Your lastName' value={lastName} onChange={(e)=> setlastName(e.target.value) } />
-                        <input type='email' placeholder='Enter Your email' value={email} onChange={(e)=> setEmail(e.target.value) } />
-                        <input type='password' placeholder='Enter Password' value={password} onChange={(e)=> setPasword(e.target.value) } />
-                        <input type='password' placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value) } />
-                        <input type='submit' value={'Submit'} />
+                        <input type='firstName' placeholder='Enter Your firstName' value={firstName} onChange={(e)=> setfirstName(e.target.value) } className="w-full appearance-none rounded-lg border-2 border-white bg-transparent"/>
+                        <input type='lastName' placeholder='Enter Your lastName' value={lastName} onChange={(e)=> setlastName(e.target.value) } className="w-full appearance-none rounded-lg border-2 border-white bg-transparent"/>
+                        <input type='email' placeholder='Enter Your email' value={email} onChange={(e)=> setEmail(e.target.value) } className="w-full appearance-none rounded-lg border-2 border-white bg-transparent" />
+                        <input type='password' placeholder='Enter Password' value={password} onChange={(e)=> setPasword(e.target.value) } className="w-full appearance-none rounded-lg border-2 border-white bg-transparent"/>
+                        <input type='password' placeholder='Confirm Password' value={confirmPassword} onChange={(e)=> setConfirmPassword(e.target.value) } className="w-full appearance-none rounded-lg border-2 border-white bg-transparent"/>
+                        <button type='submit' value={'Register'}  name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
+                    transition delay-150 duration-300 ease-in-out' > Create Event </button>
                     </form>
+                    <p className='text-white'> Already have an account? <Link to='/' className='text-[#29A699] underline'> Login </Link> </p>
                 </div>
             </div>
         </div>

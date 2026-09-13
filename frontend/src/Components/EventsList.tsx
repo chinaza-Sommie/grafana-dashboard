@@ -42,7 +42,7 @@ function EventsList({user, onPageToggle, activePage, onSetEventToEdit}: EventLis
     return (
         <>
             <div className='flex justify-end'>
-                <button className='button mb-5 hover:cursor-pointer' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
+                <button className='bg-[#29A699] button mb-5 text-white hover:cursor-pointer hover:text-[#042642] transition delay-150 duration-300 ease-in-out rounded-md' onClick={() => onPageToggle('addEvent')}> + Add Event </button>
             </div>
             <div className='grid grid-cols-4 gap-8'>
                 {

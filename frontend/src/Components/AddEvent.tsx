@@ -131,8 +131,12 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
         for(let i = 0; i < categories.length; i++){
             const bookingData = { agreedPrice, bookingstatus: "pending", serviceId: findServiceById(categories[i]) , eventId: eventData}
             await api.addVendorBooking(bookingData);
-            console.log("service created successfully");
+            
         }
+        console.log("service created successfully");
+        seteventFormComplete(false);
+        setError("booking created successfully");
+        onPageToggle('events');
 
     }
 
@@ -172,126 +176,129 @@ function AddEvent({user, onPageToggle, eventToEdit, onSetEventToEdit}: EventForm
         
         const updateEvent = await api.updateEvent(eventToEdit.eventId , updateData);
         console.log(updateEvent);
+        onPageToggle('events');
+        onSetEventToEdit(null);
     }
     
     return (
-        <div className='mx-[30%]'>
-            <p className='text-[14px] mb-4' onClick={() => {onPageToggle('events') ; onSetEventToEdit(null)}}> ← Back to Dashboard </p>
-            <h4> {!eventFormComplete ? 'Create Event': 'Lets Plan Your Event'}</h4>
+        <div className='mx-[15%] lg:mx-[30%]'>
+            <p className=' mb-4 px-5 text-[#29A699] font-bold hover:cursor-pointer hover:underline' onClick={() => {onPageToggle('events') ; onSetEventToEdit(null)}}> ← Back to Dashboard </p>
             
-            {error && (
-                    <p className='text-[red] mb-5'>{error}</p>
-            )}
+            <div className='bg-[#042642] text-white py-[60px] px-[50px] bg-[#042642] rounded-lg shadow-xl/30 lg:px-[40px]'> 
+                <h4> {!eventFormComplete ? 'Create Event': 'Lets Plan Your Event'}</h4>
+                
+                {error && (
+                        <p className='text-[red] bg-[#ffa2a2] border border-2 border-[red] mb-5 py-3 rounded-lg text-center'>{error}</p>
+                )}
 
-            {
-                !eventFormComplete && (
-                    <form onSubmit={eventToEdit === null ? createEvent : handleUpdateEvent}>
-                        <input type='text' placeholder='Enter Event Name'
-                        className='rounded'
-                        value={name}
-                        onChange={(e) => setname(e.target.value)}/>
-
-                        <input type='text' placeholder='Enter eventType'
-                        className='rounded'
-                        value={eventType}
-                        onChange={(e) => seteventType(e.target.value)}/>
-
-                        {/* use below to search by location */}
-                        <div className="grid grid-cols-2 gap-3">
-                            <input type='text'
-                            placeholder='Enter Event City'
+                {
+                    !eventFormComplete && (
+                        <form className='' onSubmit={eventToEdit === null ? createEvent : handleUpdateEvent}>
+                            <input type='text' placeholder='Enter Event Name'
                             className='rounded'
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}/>
+                            value={name}
+                            onChange={(e) => setname(e.target.value)}/>
 
-                            <input type='number'
-                            placeholder='Enter Guest Count'
+                            <input type='text' placeholder='Enter eventType'
                             className='rounded'
-                            value={guestCount}
-                            onChange={(e) => setGuestCount(Number(e.target.value))} />
-                        </div>
-                        <div className="grid grid-cols-2 gap-3 my-5">
-                            <div>
-                                  <label className="block mb-2">Start Date & Time</label>
-                                 <input
-                                 type="datetime-local"
-                                 name="startDateTime"
-                                    className="w-full p-3 border border-black rounded"
-                                    value={startDateTime}
-                                    onChange={(e) => setStartDateTime(e.target.value)}
-                                />
+                            value={eventType}
+                            onChange={(e) => seteventType(e.target.value)}/>
+
+                            {/* use below to search by location */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <input type='text'
+                                placeholder='Enter Event City'
+                                className='rounded'
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}/>
+
+                                <input type='number'
+                                placeholder='Enter Guest Count'
+                                className='rounded'
+                                value={guestCount}
+                                onChange={(e) => setGuestCount(Number(e.target.value))} />
                             </div>
-
-                            <div>
-                                <label className="block mb-2">End Date & Time</label>
-                                <input
+                            <div className="grid grid-cols-2 gap-3 my-5">
+                                <div>
+                                    <label className="block mb-2">Start Date & Time</label>
+                                    <input
                                     type="datetime-local"
-                                    name="endDateTime"
-                                    className="w-full p-3 border border-black rounded"
-                                    value={endDateTime}
-                                    onChange={(e) => setEndDateTime(e.target.value)}
-                                />
+                                    name="startDateTime"
+                                        className="w-full p-3 border border-black rounded"
+                                        value={startDateTime}
+                                        onChange={(e) => setStartDateTime(e.target.value)}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block mb-2">End Date & Time</label>
+                                    <input
+                                        type="datetime-local"
+                                        name="endDateTime"
+                                        className="w-full p-3 border border-black rounded"
+                                        value={endDateTime}
+                                        onChange={(e) => setEndDateTime(e.target.value)}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        
-                        <input type='submit' value={'Create Event'} name='Submit' className='rounded'/>
-                    </form>
-                )
-            }
-
-            {
-                eventFormComplete && (
-                    <form onSubmit={handlePlanEvent}>
-                        <select
-                            value={venue}
-                            onChange={(e) => setVenue(e.target.value)}
-                            required={true}>
-                            <option value="">Select Venue</option>
-                            {filterServiceByCategory("venue").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId} >{service.name} -  £{service.basePrice}</option>
-                            ))
-                            }
-                        </select>
-                        <select
-                            value={foodAndDrinks}
-                            onChange={(e) =>setFoodAndDrinks(e.target.value)}
-                            required={true}>
-                            <option value="">Select food and Drinks</option>
-                            {filterServiceByCategory("food and drinks").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
-                            ))
-                            }
-                        </select>
-
-                        <select
-                            value={entertainment}
-                            onChange={(e) => setEntertainment(e.target.value)}
-                            required={true}>
-                            <option value="">Select food and Drinks</option>
-                            {filterServiceByCategory("entertainment").map((service) => (
-                                <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
-                            ))
-                            }
-                        </select>
-
-                        { venue && (
                             
-                            <div className='flex justify-between border'>
-                                <div> Venue name</div>
-                                <div> vendor name</div>
-                                <div> price name</div>
-                            </div>
-                        )}
-                        <div className='flex justify-end mb-5'>
-                            { totalAmount != 0 && (
-                                <b> Total: {totalAmount} </b>
-                            )}
-                        </div> 
+                            {/* <input type='submit' value={'Create Event'} name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
+                    transition delay-150 duration-300 ease-in-out'/> */}
+                            <button type='submit' value={'Create Event'}  name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
+                    transition delay-150 duration-300 ease-in-out' > Create Event </button>
+                        </form>
 
-                        <input type='submit' value={'Submit Planned Event'} name='Submit' className='rounded'/>
-                    </form>
-                )
-            }
+                    )
+                }
+
+                {
+                    eventFormComplete && (
+                        <form onSubmit={handlePlanEvent}>
+                            <select
+                                value={venue}
+                                onChange={(e) => setVenue(e.target.value)}
+                                required={true}>
+                                <option value="">Select Venue</option>
+                                {filterServiceByCategory("venue").map((service) => (
+                                    <option key={service.serviceId} value={service.serviceId} >{service.name} -  £{service.basePrice}</option>
+                                ))
+                                }
+                            </select>
+                            <select
+                                value={foodAndDrinks}
+                                onChange={(e) =>setFoodAndDrinks(e.target.value)}
+                                required={true}>
+                                <option value="">Select food and Drinks</option>
+                                {filterServiceByCategory("food and drinks").map((service) => (
+                                    <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
+                                ))
+                                }
+                            </select>
+
+                            <select
+                                value={entertainment}
+                                onChange={(e) => setEntertainment(e.target.value)}
+                                required={true}>
+                                <option value="">Select food and Drinks</option>
+                                {filterServiceByCategory("entertainment").map((service) => (
+                                    <option key={service.serviceId} value={service.serviceId}>{service.name} -  £{service.basePrice}</option>
+                                ))
+                                }
+                            </select>
+
+                            <div className='flex justify-end mb-5 text-[20px]'>
+                                { totalAmount != 0 && (
+                                    <b> Total: {totalAmount.toLocaleString()} </b>
+                                )}
+                            </div> 
+
+                            {/* <input type='submit' value={'Submit Planned Event'} name='Submit' className='rounded'/> */}
+                            <button type='submit' value={'Submit Planned Event'}  name='Submit' className='rounded-lg mt-5 bg-[#29A699] border border-[#29A699] hover:cursor-pointer hover:bg-[#198c80]
+                    transition delay-150 duration-300 ease-in-out' > Submit Planned Event </button>
+                        </form>
+                    )
+                }
+            </div>
         </div>
     );
 }
