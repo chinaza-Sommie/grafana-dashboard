@@ -10,13 +10,13 @@ VALUES
     ('Tasty Bites Catering', 'Full-service catering for all occasions', 'info@tastybites.com', '555-202-3030', '45 Culinary St', 'Los Angeles', 'ACTIVE', NOW(), NOW()),
     ('Rhythm & Beats Entertainment', 'DJ and live band entertainment services', 'bookings@rhythmbeats.com', '555-303-4040', '78 Music Blvd', 'Chicago', 'ACTIVE', NOW(), NOW());
 
-INSERT INTO serviceCategories (category_name, description)
+INSERT INTO service_categories (category_name, description)
 VALUES
     ('Venue', 'Locations and spaces for hosting events'),
     ('Food and Drinks', 'Catering, beverages, and dining services'),
     ('Entertainment', 'Music, performances, and entertainment services');
 
-INSERT INTO vendorServices (name, description, base_price, created_at, updated_at, vendors_id, service_category_id)
+INSERT INTO vendor_services (name, description, base_price, created_at, updated_at, vendors_id, service_category_id)
 VALUES
     ('Grand Ballroom Rental', 'Spacious ballroom rental for up to 300 guests', 2500.00, NOW(), NOW(), 1, 1),
     ('Wedding Catering Package', 'Three-course meal catering for weddings', 1800.00, NOW(), NOW(), 2, 2),
@@ -29,7 +29,7 @@ VALUES
     ('Daniel Birthday Bash', 'Birthday', '2026-10-20 19:00:00', '2026-10-20 23:30:00', '1200.00', 50, 'CONFIRMED', NOW(), NOW(), 3);
  
 
-INSERT INTO vendorBookings (agreed_price, start_date_time, bookingstatus, created_at, updated_at, event_id, service_id)
+INSERT INTO vendor_bookings (agreed_price, start_date_time, bookingstatus, created_at, updated_at, event_id, service_id)
 VALUES
     ('2500.00', '2026-11-14 16:00:00', 'CONFIRMED', NOW(), NOW(), 1, 1),
     ('1800.00', '2026-12-05 18:00:00', 'PENDING', NOW(), NOW(), 2, 2),
